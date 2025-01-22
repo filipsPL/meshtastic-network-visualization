@@ -20,7 +20,6 @@ def init_db(db_path="mqtt_messages.db"):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
-    # Create messages table
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS messages (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,17 +33,17 @@ def init_db(db_path="mqtt_messages.db"):
            )"""
     )
     
-    # Create nodes table
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS nodes (
-               id INTEGER PRIMARY KEY,  /* Node ID as integer (converted from hex) */
+               id INTEGER PRIMARY KEY,
                longname TEXT,
                shortname TEXT,
+               hardware INTEGER,
+               role INTEGER,
                last_seen INTEGER
            )"""
     )
     
-    # Create neighbors table
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS neighbors (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,6 +59,25 @@ def init_db(db_path="mqtt_messages.db"):
     conn.commit()
     return conn
 
+
+def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, timestamp):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            """INSERT INTO nodes (id, longname, shortname, hardware, role, last_seen)
+               VALUES (?, ?, ?, ?, ?, ?)
+               ON CONFLICT(id) DO UPDATE SET
+               longname=excluded.longname,
+               shortname=excluded.shortname,
+               hardware=excluded.hardware,
+               role=excluded.role,
+               last_seen=excluded.last_seen""",
+            (node_id, longname, shortname, hardware, role, timestamp)
+        )
+        conn.commit()
+    except Exception as e:
+        print(f"Error saving node info: {e}")
+
 def save_message_to_db(conn, topic, sender, receiver, timestamp, rssi, snr, type):
     cursor = conn.cursor()
     cursor.execute(
@@ -68,17 +86,19 @@ def save_message_to_db(conn, topic, sender, receiver, timestamp, rssi, snr, type
     )
     conn.commit()
 
-def save_nodeinfo_to_db(conn, node_id, longname, shortname, timestamp):
+def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, timestamp):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            """INSERT INTO nodes (id, longname, shortname, last_seen)
-               VALUES (?, ?, ?, ?)
+            """INSERT INTO nodes (id, longname, shortname, hardware, role, last_seen)
+               VALUES (?, ?, ?, ?, ?, ?)
                ON CONFLICT(id) DO UPDATE SET
                longname=excluded.longname,
                shortname=excluded.shortname,
+               hardware=excluded.hardware,
+               role=excluded.role,
                last_seen=excluded.last_seen""",
-            (node_id, longname, shortname, timestamp)
+            (node_id, longname, shortname, hardware, role, timestamp)
         )
         conn.commit()
     except Exception as e:
@@ -150,7 +170,6 @@ def on_message(client, userdata, msg):
         topic = msg.topic
         payload = json.loads(msg.payload.decode("utf-8"))
         
-        # Extract common message fields
         sender = payload.get("from")
         receiver = payload.get("to")
         timestamp = payload.get("timestamp")
@@ -158,21 +177,20 @@ def on_message(client, userdata, msg):
         snr = payload.get("snr")
         msg_type = payload.get("type")
 
-        # Add message data to queue
         userdata.put(("message", topic, sender, receiver, timestamp, rssi, snr, msg_type))
 
-        # If this is a nodeinfo message, extract and store node information
         if msg_type == "nodeinfo" and "payload" in payload:
             node_payload = payload["payload"]
-            if all(k in node_payload for k in ["id", "longname", "shortname"]):
+            if all(k in node_payload for k in ["id", "longname", "shortname", "hardware", "role"]):
                 node_id = hex_to_int(node_payload["id"])
                 if node_id is not None:
                     userdata.put(("nodeinfo", node_id,
                                 node_payload["longname"], 
-                                node_payload["shortname"], 
+                                node_payload["shortname"],
+                                node_payload["hardware"],
+                                node_payload["role"], 
                                 timestamp))
         
-        # If this is a neighborinfo message, extract and store neighbor information
         elif msg_type == "neighborinfo" and "payload" in payload:
             neighbor_payload = payload["payload"]
             if "node_id" in neighbor_payload and "neighbors" in neighbor_payload:
