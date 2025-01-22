@@ -26,6 +26,7 @@ def init_db(db_path="mqtt_messages.db"):
                topic TEXT,
                sender INTEGER,
                receiver INTEGER,
+               physical_sender INTEGER,
                timestamp INTEGER,
                rssi REAL,
                snr REAL,
@@ -78,11 +79,12 @@ def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, time
     except Exception as e:
         print(f"Error saving node info: {e}")
 
-def save_message_to_db(conn, topic, sender, receiver, timestamp, rssi, snr, type):
+
+def save_message_to_db(conn, topic, sender, receiver, physical_sender, timestamp, rssi, snr, type):
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO messages (topic, sender, receiver, timestamp, rssi, snr, type) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        (topic, sender, receiver, timestamp, rssi, snr, type),
+        "INSERT INTO messages (topic, sender, receiver, physical_sender, timestamp, rssi, snr, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        (topic, sender, receiver, physical_sender, timestamp, rssi, snr, type),
     )
     conn.commit()
 
@@ -177,7 +179,8 @@ def on_message(client, userdata, msg):
         snr = payload.get("snr")
         msg_type = payload.get("type")
 
-        userdata.put(("message", topic, sender, receiver, timestamp, rssi, snr, msg_type))
+        physical_sender = hex_to_int(payload.get("sender"))
+        userdata.put(("message", topic, sender, receiver, physical_sender, timestamp, rssi, snr, msg_type))
 
         if msg_type == "nodeinfo" and "payload" in payload:
             node_payload = payload["payload"]
