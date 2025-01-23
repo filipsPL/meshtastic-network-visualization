@@ -8,6 +8,7 @@ from queue import Queue
 from datetime import datetime
 from paho.mqtt.client import Client
 
+
 def load_config(config_path="config.json"):
     try:
         with open(config_path, "r") as config_file:
@@ -16,10 +17,11 @@ def load_config(config_path="config.json"):
         print(f"Error loading config file: {e}")
         exit(1)
 
+
 def init_db(db_path="mqtt_messages.db"):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    
+
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS messages (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,7 +35,7 @@ def init_db(db_path="mqtt_messages.db"):
                type TEXT
            )"""
     )
-    
+
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS nodes (
                id INTEGER PRIMARY KEY,
@@ -44,7 +46,7 @@ def init_db(db_path="mqtt_messages.db"):
                last_seen INTEGER
            )"""
     )
-    
+
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS neighbors (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,7 +58,7 @@ def init_db(db_path="mqtt_messages.db"):
                FOREIGN KEY (neighbor_id) REFERENCES nodes (id)
            )"""
     )
-    
+
     conn.commit()
     return conn
 
@@ -73,7 +75,7 @@ def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, time
                hardware=excluded.hardware,
                role=excluded.role,
                last_seen=excluded.last_seen""",
-            (node_id, longname, shortname, hardware, role, timestamp)
+            (node_id, longname, shortname, hardware, role, timestamp),
         )
         conn.commit()
     except Exception as e:
@@ -88,6 +90,7 @@ def save_message_to_db(conn, topic, sender, receiver, physical_sender, timestamp
     )
     conn.commit()
 
+
 def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, timestamp):
     cursor = conn.cursor()
     try:
@@ -100,29 +103,30 @@ def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, time
                hardware=excluded.hardware,
                role=excluded.role,
                last_seen=excluded.last_seen""",
-            (node_id, longname, shortname, hardware, role, timestamp)
+            (node_id, longname, shortname, hardware, role, timestamp),
         )
         conn.commit()
     except Exception as e:
         print(f"Error saving node info: {e}")
 
+
 def save_neighbors_to_db(conn, node_id, neighbors, timestamp):
     cursor = conn.cursor()
     try:
         # First, delete old neighbor entries for this node
-        cursor.execute("DELETE FROM neighbors WHERE node_id = ? AND timestamp = ?", 
-                      (node_id, timestamp))
-        
+        cursor.execute("DELETE FROM neighbors WHERE node_id = ? AND timestamp = ?", (node_id, timestamp))
+
         # Insert new neighbor relationships
         for neighbor in neighbors:
             cursor.execute(
                 """INSERT INTO neighbors (node_id, neighbor_id, snr, timestamp)
                    VALUES (?, ?, ?, ?)""",
-                (node_id, neighbor['node_id'], neighbor['snr'], timestamp)
+                (node_id, neighbor["node_id"], neighbor["snr"], timestamp),
             )
         conn.commit()
     except Exception as e:
         print(f"Error saving neighbor info: {e}")
+
 
 def db_worker(queue, db_path):
     conn = sqlite3.connect(db_path)
@@ -141,14 +145,16 @@ def db_worker(queue, db_path):
             print(f"Database error: {e}")
     conn.close()
 
+
 def hex_to_int(hex_id):
     """Convert hex node ID to integer, removing the leading '!' if present"""
     try:
-        if hex_id.startswith('!'):
+        if hex_id.startswith("!"):
             hex_id = hex_id[1:]
         return int(hex_id, 16)
     except (ValueError, AttributeError):
         return None
+
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -156,6 +162,7 @@ def on_connect(client, userdata, flags, rc):
         client.subscribe(config["MQTT_TOPIC"])
     else:
         print(f"Failed to connect, return code {rc}")
+
 
 def on_disconnect(client, userdata, rc):
     print("Disconnected from MQTT Broker. Attempting to reconnect...")
@@ -167,11 +174,17 @@ def on_disconnect(client, userdata, rc):
         except Exception:
             time.sleep(5)
 
+
 def on_message(client, userdata, msg):
     try:
         topic = msg.topic
         payload = json.loads(msg.payload.decode("utf-8"))
-        
+
+        # https://meshtastic.org/docs/software/integrations/mqtt/
+        # "sender" is the hexadecimal Node ID of the gateway device
+        # "from" is the unique decimal-equivalent Node ID of the node on the mesh that sent this message.
+        # "to" is the decimal-equivalent Node ID of the destination of the message.
+
         sender = payload.get("from")
         receiver = payload.get("to")
         timestamp = payload.get("timestamp")
@@ -187,23 +200,29 @@ def on_message(client, userdata, msg):
             if all(k in node_payload for k in ["id", "longname", "shortname", "hardware", "role"]):
                 node_id = hex_to_int(node_payload["id"])
                 if node_id is not None:
-                    userdata.put(("nodeinfo", node_id,
-                                node_payload["longname"], 
-                                node_payload["shortname"],
-                                node_payload["hardware"],
-                                node_payload["role"], 
-                                timestamp))
-        
+                    userdata.put(
+                        (
+                            "nodeinfo",
+                            node_id,
+                            node_payload["longname"],
+                            node_payload["shortname"],
+                            node_payload["hardware"],
+                            node_payload["role"],
+                            timestamp,
+                        )
+                    )
+
         elif msg_type == "neighborinfo" and "payload" in payload:
             neighbor_payload = payload["payload"]
             if "node_id" in neighbor_payload and "neighbors" in neighbor_payload:
                 node_id = neighbor_payload["node_id"]
                 neighbors = neighbor_payload["neighbors"]
                 userdata.put(("neighbors", node_id, neighbors, timestamp))
-                    
+
         print(f"Topic: {topic} | Data: {sender}, {receiver}, {timestamp}, {rssi}, {snr}, {msg_type}")
     except Exception as e:
         print(f"Error processing message: {e}")
+
 
 # Load configuration
 config = load_config()
@@ -253,7 +272,7 @@ finally:
     # Stop the MQTT client
     client.loop_stop()
     client.disconnect()
-    
+
     # Stop the database worker
     message_queue.put(None)  # Signal the worker to exit
     db_thread.join()

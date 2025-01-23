@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,31 +9,39 @@
     <script src="js/layout-base.js"></script>
     <script src="js/cose-base.js"></script>
     <script src="js/cytoscape-cose-bilkent.js"></script>
-    
+
     <style>
         #cy {
             width: 100%;
             height: 90vh;
             border: 1px solid black;
         }
+
         .controls {
             padding: 10px;
             background-color: #f5f5f5;
             border-bottom: 1px solid #ddd;
         }
+
         select {
             padding: 5px;
             margin-right: 10px;
         }
     </style>
 </head>
+
 <body>
     <strong>Map of mesh node connections.</strong> Updated: <span id="whenupdated"></span>
     <div class="controls">
         <select id="fileSelect">
+            <option value="data/cytoscape_messages_physical_15min.json">➽ Physical senders - 15 minutes</option>
+            <option value="data/cytoscape_messages_physical_30min.json">➽ Physical senders - 30 minutes</option>
+            <option value="data/cytoscape_messages_physical_1h.json" selected="selected">➽ Physical senders - 1 hour
+            </option>
+            <option value="data/cytoscape_messages_physical_3h.json">➽ Physical senders - 3 hours</option>
             <option value="data/cytoscape_messages_15min.json">💬 Messages - 15 minutes</option>
             <option value="data/cytoscape_messages_30min.json">💬 Messages - 30 minutes</option>
-            <option value="data/cytoscape_messages_1h.json" selected="selected">💬 Messages - 1 hour</option>
+            <option value="data/cytoscape_messages_1h.json">💬 Messages - 1 hour</option>
             <option value="data/cytoscape_messages_3h.json">💬 Messages - 3 hours</option>
             <option value="data/cytoscape_messages_24h.json">💬 Messages - 24 hours</option>
             <option value="data/cytoscape_neighbors_1h.json">🔗 Neighbors - 1 hour</option>
@@ -136,23 +145,23 @@
                 });
 
             // Update the timestamp
-            fetch('cytoscape_data.txt')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-            return response.text();
-        })
-        .then(text => {
-            document.getElementById("whenupdated").innerHTML = text;
-        })
-        .catch(error => {
-            // Handle/report error
-        });
+            fetch('data/cytoscape_data.txt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error " + response.status);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    document.getElementById("whenupdated").innerHTML = text;
+                })
+                .catch(error => {
+                    // Handle/report error
+                });
         }
 
         // Add event listener for dropdown changes
-        document.getElementById('fileSelect').addEventListener('change', function() {
+        document.getElementById('fileSelect').addEventListener('change', function () {
             loadData(this.value);
         });
 
@@ -160,4 +169,5 @@
         loadData(document.getElementById('fileSelect').value);
     </script>
 </body>
+
 </html>

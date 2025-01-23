@@ -1,0 +1,9 @@
+{
+    "MQTT_BROKER": "mqtt.meshtastic.org",
+    "MQTT_PORT": 1883,
+    "MQTT_TOPIC": "msh/EU_868/#",
+    "MQTT_USERNAME": "meshdev",
+    "MQTT_PASSWORD": "large4cats",
+    "USE_SSL": false,
+    "CLIENT_ID": "!aa3aded8"
+}
