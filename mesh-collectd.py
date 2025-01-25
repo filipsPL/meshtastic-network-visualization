@@ -23,6 +23,19 @@ def init_db(db_path="mqtt_messages.db"):
     cursor = conn.cursor()
 
     cursor.execute(
+        """CREATE TABLE IF NOT EXISTS nodes (
+               id INTEGER PRIMARY KEY,
+               longname TEXT,
+               shortname TEXT,
+               hardware INTEGER,
+               role INTEGER,
+               last_seen INTEGER,
+               latitude REAL,
+               longitude REAL
+           )"""
+    )
+
+    cursor.execute(
         """CREATE TABLE IF NOT EXISTS messages (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
                topic TEXT,
@@ -33,17 +46,6 @@ def init_db(db_path="mqtt_messages.db"):
                rssi REAL,
                snr REAL,
                type TEXT
-           )"""
-    )
-
-    cursor.execute(
-        """CREATE TABLE IF NOT EXISTS nodes (
-               id INTEGER PRIMARY KEY,
-               longname TEXT,
-               shortname TEXT,
-               hardware INTEGER,
-               role INTEGER,
-               last_seen INTEGER
            )"""
     )
 
@@ -63,19 +65,22 @@ def init_db(db_path="mqtt_messages.db"):
     return conn
 
 
-def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, timestamp):
+def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, timestamp, latitude=None, longitude=None):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            """INSERT INTO nodes (id, longname, shortname, hardware, role, last_seen)
-               VALUES (?, ?, ?, ?, ?, ?)
+            """INSERT INTO nodes (id, longname, shortname, hardware, role, last_seen, latitude, longitude)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                ON CONFLICT(id) DO UPDATE SET
-               longname=excluded.longname,
-               shortname=excluded.shortname,
-               hardware=excluded.hardware,
-               role=excluded.role,
-               last_seen=excluded.last_seen""",
-            (node_id, longname, shortname, hardware, role, timestamp),
+               longname=COALESCE(?, nodes.longname),
+               shortname=COALESCE(?, nodes.shortname),
+               hardware=COALESCE(?, nodes.hardware),
+               role=COALESCE(?, nodes.role),
+               last_seen=MAX(excluded.last_seen, nodes.last_seen),
+               latitude=COALESCE(?, nodes.latitude),
+               longitude=COALESCE(?, nodes.longitude)""",
+            (node_id, longname, shortname, hardware, role, timestamp, latitude, longitude,
+             longname, shortname, hardware, role, latitude, longitude)
         )
         conn.commit()
     except Exception as e:
@@ -89,25 +94,6 @@ def save_message_to_db(conn, topic, sender, receiver, physical_sender, timestamp
         (topic, sender, receiver, physical_sender, timestamp, rssi, snr, type),
     )
     conn.commit()
-
-
-def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, timestamp):
-    cursor = conn.cursor()
-    try:
-        cursor.execute(
-            """INSERT INTO nodes (id, longname, shortname, hardware, role, last_seen)
-               VALUES (?, ?, ?, ?, ?, ?)
-               ON CONFLICT(id) DO UPDATE SET
-               longname=excluded.longname,
-               shortname=excluded.shortname,
-               hardware=excluded.hardware,
-               role=excluded.role,
-               last_seen=excluded.last_seen""",
-            (node_id, longname, shortname, hardware, role, timestamp),
-        )
-        conn.commit()
-    except Exception as e:
-        print(f"Error saving node info: {e}")
 
 
 def save_neighbors_to_db(conn, node_id, neighbors, timestamp):
@@ -141,6 +127,8 @@ def db_worker(queue, db_path):
                 save_nodeinfo_to_db(conn, *item[1:])
             elif item[0] == "neighbors":
                 save_neighbors_to_db(conn, *item[1:])
+            elif item[0] == "position":
+                save_nodeinfo_to_db(conn, *item[1:])
         except Exception as e:
             print(f"Database error: {e}")
     conn.close()
@@ -153,6 +141,7 @@ def hex_to_int(hex_id):
             hex_id = hex_id[1:]
         return int(hex_id, 16)
     except (ValueError, AttributeError):
+        print(f"Failed to convert hex ID: {hex_id}")
         return None
 
 
@@ -178,14 +167,19 @@ def on_disconnect(client, userdata, rc):
 def on_message(client, userdata, msg):
     try:
         topic = msg.topic
-        payload = json.loads(msg.payload.decode("utf-8"))
+        try:
+            payload = json.loads(msg.payload.decode("utf-8"))
+        except:
+            return
 
         # https://meshtastic.org/docs/software/integrations/mqtt/
         # "sender" is the hexadecimal Node ID of the gateway device
         # "from" is the unique decimal-equivalent Node ID of the node on the mesh that sent this message.
         # "to" is the decimal-equivalent Node ID of the destination of the message.
 
-        sender = payload.get("from")
+
+        # Primary node identification using 'from'
+        node_id = payload.get("from")
         receiver = payload.get("to")
         timestamp = payload.get("timestamp")
         rssi = payload.get("rssi")
@@ -193,33 +187,68 @@ def on_message(client, userdata, msg):
         msg_type = payload.get("type")
 
         physical_sender = hex_to_int(payload.get("sender"))
-        userdata.put(("message", topic, sender, receiver, physical_sender, timestamp, rssi, snr, msg_type))
+
+        # pretty pring the message
+        print(
+            f"Node {node_id} received message from {receiver} at {timestamp} with RSSI {rssi} and SNR {snr} and type {msg_type}"
+        )
+
+        userdata.put(("message", topic, node_id, receiver, physical_sender, timestamp, rssi, snr, msg_type))
 
         if msg_type == "nodeinfo" and "payload" in payload:
             node_payload = payload["payload"]
             if all(k in node_payload for k in ["id", "longname", "shortname", "hardware", "role"]):
-                node_id = hex_to_int(node_payload["id"])
-                if node_id is not None:
-                    userdata.put(
-                        (
-                            "nodeinfo",
-                            node_id,
-                            node_payload["longname"],
-                            node_payload["shortname"],
-                            node_payload["hardware"],
-                            node_payload["role"],
-                            timestamp,
-                        )
+                userdata.put(
+                    (
+                        "nodeinfo",
+                        node_id,  # Use 'from' as primary identifier
+                        node_payload["longname"].strip(),
+                        node_payload["shortname"].strip(),
+                        node_payload["hardware"],
+                        node_payload["role"],
+                        timestamp,
                     )
+                )
+                # print message details in one line
+                print(
+                    f"Node {node_id}: {timestamp} {node_id} {node_payload['longname']} {node_payload['shortname']} {node_payload['hardware']} {node_payload['role']}"
+                )
+
 
         elif msg_type == "neighborinfo" and "payload" in payload:
             neighbor_payload = payload["payload"]
             if "node_id" in neighbor_payload and "neighbors" in neighbor_payload:
-                node_id = neighbor_payload["node_id"]
                 neighbors = neighbor_payload["neighbors"]
                 userdata.put(("neighbors", node_id, neighbors, timestamp))
 
-        print(f"Topic: {topic} | Data: {sender}, {receiver}, {timestamp}, {rssi}, {snr}, {msg_type}")
+                # print message details in one line
+                print(
+                    f"Node {node_id}: {timestamp} {node_id} {node_payload['longname']} {node_payload['shortname']} {node_payload['hardware']} {node_payload['role']}"
+                )
+
+        elif msg_type == "position" and "payload" in payload:
+            pos_payload = payload["payload"]
+            if all(k in pos_payload for k in ["latitude_i", "longitude_i"]):
+                latitude = f"{(int(pos_payload['latitude_i']) * 1e-7):.5f}"
+                longitude = f"{(int(pos_payload['longitude_i']) * 1e-7):.5f}"
+                userdata.put(
+                    (
+                        "position",
+                        node_id,  # Use 'from' as primary identifier
+                        None,  # longname
+                        None,  # shortname
+                        None,  # hardware
+                        None,  # role
+                        timestamp,
+                        float(latitude),
+                        float(longitude),
+                    )
+                )
+
+                # print message details in one line
+                print(f"Node {node_id}: {timestamp} {node_id} {latitude} {longitude}")
+
+
     except Exception as e:
         print(f"Error processing message: {e}")
 
