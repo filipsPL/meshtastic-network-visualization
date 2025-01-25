@@ -1,2 +1,3 @@
 old/
 config*.json
+mqtt_messages.db
