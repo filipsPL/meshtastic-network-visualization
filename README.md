@@ -1,8 +1,26 @@
 # Meshtastic Network Data Visualization and Processing Tools
 
+
+> [!TIP]
+> **tl;dr** With these programs you can monitor meshtastic nodes via mqtt and visualize the message sources, neighbours, or interactions between nodes. Tested under linux.
+
+
 Set of tools for processing, storing, and visualizing data from Meshtastic mesh networks. It includes scripts for collecting data from an MQTT broker, exporting data to JSON format for visualization, and an HTML/JavaScript-based visualization tool.
 
+> [!NOTE]  
+> Please note this is a very early version of the program under development.
+
 ![screenshot](obrazki/obrazek-README.png)
+
+# Quick start
+
+1. Copy `config.json.txt` to `config.json` and change according to your needs
+2. Run `python mesh-collectd.py` somewhere in a background to collect data
+3. After some time, run `python sqlite2json.py` to generate json files for visualization. They should be copied to `webpage/data/`
+4. Open `webpage/index.html` in the browser, and you should see the graphs
+   1. If it doesn't work you may need to upload `webpage/` to a web server so `index.html` can access json files via ajax.
+
+
 
 
 ## Components
