@@ -48,7 +48,7 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
 - Multi-threaded database operations for efficiency.
 
 ### 2. Data Export (`sqlite2json.py`)
-- To be called periodically as a cron task etc.
+- To be called periodically as a cron task etc. (see: **4** below)
 - Exports message and neighbor data from the SQLite database to JSON files compatible with Cytoscape.js.
 - Supports time-window-based filtering for flexible data analysis.
 - Generates separate JSON files for physical senders and logical senders.
@@ -60,7 +60,12 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
   - **Messages** - showing `from` and `to` of messages passed through the network
   - **Physical sender** - showing `sender` and `to` of messages passed through the network *(prototype)*
   - **Neighbors** - showing connections reported by nodes as `neighbors` *(early prototype)*
-  
+
+### 4. Auxiliary script to dump and copy data (`cron-task.sh`)
+- to be run from cron
+- dump json data, copy to web directory, generates timestamp
+
+
 ## Installation
 
 ### Prerequisites
