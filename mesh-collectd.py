@@ -65,7 +65,7 @@ def init_db(db_path="mqtt_messages.db"):
     return conn
 
 
-def save_nodeinfo_to_db(conn, node_id, longname, shortname, hardware, role, timestamp, latitude=None, longitude=None):
+def save_nodeinfo_to_db(conn, node_id, longname=None, shortname=None, hardware=None, role=None, timestamp=None, latitude=None, longitude=None):
     cursor = conn.cursor()
     try:
         cursor.execute(
@@ -202,8 +202,8 @@ def on_message(client, userdata, msg):
                     (
                         "nodeinfo",
                         node_id,  # Use 'from' as primary identifier
-                        node_payload["longname"].strip(),
-                        node_payload["shortname"].strip(),
+                        node_payload["longname"].encode('ascii', 'ignore').decode('ascii').strip(),
+                        node_payload["shortname"].encode('ascii', 'ignore').decode('ascii').strip(),
                         node_payload["hardware"],
                         node_payload["role"],
                         timestamp,
@@ -211,7 +211,7 @@ def on_message(client, userdata, msg):
                 )
                 # print message details in one line
                 print(
-                    f"Node {node_id}: {timestamp} {node_id} {node_payload['longname']} {node_payload['shortname']} {node_payload['hardware']} {node_payload['role']}"
+                    f"Node {node_id}: {timestamp} {node_id} |{node_payload['longname']}|{node_payload['longname'].encode('ascii', 'ignore').decode('ascii').strip()}| {node_payload['shortname']} {node_payload['hardware']} {node_payload['role']}"
                 )
 
 
@@ -223,7 +223,7 @@ def on_message(client, userdata, msg):
 
                 # print message details in one line
                 print(
-                    f"Node {node_id}: {timestamp} {node_id} {node_payload['longname']} {node_payload['shortname']} {node_payload['hardware']} {node_payload['role']}"
+                    f"Node {node_id}: {timestamp} {node_id} {node_payload['role']}"
                 )
 
         elif msg_type == "position" and "payload" in payload:
