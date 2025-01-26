@@ -82,6 +82,7 @@
                                     id: item.data.id,
                                     label: item.data.label,
                                     connections: item.data.connections,
+                                    role: item.data.role,
                                 }
                             };
                         }
@@ -111,13 +112,43 @@
                                     'background-color': 'mapData(connections, 1, 10, #d2dbfa, #003aff)',
                                     'shape': 'round-rectangle'
                                 }
+
                             },
+
+                            {
+                                selector: 'node[role=2]',
+                                style: {
+                                    'shape': 'diamond',
+                                    'color': 'red',
+                                    'font-weight': 'bold',
+                                    'content': (ele) => `[RTR] ${ele.data('label')}`
+                                }
+                            },
+                            {
+                                selector: 'node[role=3]',
+                                style: {
+                                    'shape': 'hexagon',
+                                    'color': 'red',
+                                    'font-weight': 'bold',
+                                    'content': (ele) => `[RTC] ${ele.data('label')}`
+                                }
+                            },
+                            {
+                                selector: 'node[role=4]',
+                                style: {
+                                    'shape': 'triangle',
+                                    'color': 'red',
+                                    'font-weight': 'bold',
+                                    'content': (ele) => `[RPT] ${ele.data('label')}`
+                                }
+                            },
+
                             {
                                 selector: 'edge',
                                 style: {
                                     'width': 'mapData(count, 1, 10, 0.2, 5)',
-                                    'line-color': 'mapData(rssi, -120, 0, #ff0000, #00ff00)',
-                                    'target-arrow-color': 'mapData(rssi, -120, 0, #ff0000, #00ff00)',
+                                    'line-color': 'mapData(rssi, -120, 0, #f5ba01, #00ff00)',
+                                    'target-arrow-color': 'mapData(rssi, -120, 0, #f5ba01, #00ff00)',
                                     'target-arrow-shape': 'triangle',
                                     'curve-style': 'bezier',
                                     'label': 'data(label)',
