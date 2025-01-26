@@ -34,19 +34,18 @@
     <strong>Map of mesh node connections.</strong> Updated: <span id="whenupdated"></span>
     <div class="controls">
         <select id="fileSelect">
-            <option value="data/cytoscape_messages_physical_15min.json">➽ Physical senders - 15 minutes</option>
-            <option value="data/cytoscape_messages_physical_30min.json">➽ Physical senders - 30 minutes</option>
-            <option value="data/cytoscape_messages_physical_1h.json" selected="selected">➽ Physical senders - 1 hour
-            </option>
-            <option value="data/cytoscape_messages_physical_3h.json">➽ Physical senders - 3 hours</option>
-            <option value="data/cytoscape_messages_15min.json">💬 Messages - 15 minutes</option>
-            <option value="data/cytoscape_messages_30min.json">💬 Messages - 30 minutes</option>
-            <option value="data/cytoscape_messages_1h.json">💬 Messages - 1 hour</option>
-            <option value="data/cytoscape_messages_3h.json">💬 Messages - 3 hours</option>
-            <option value="data/cytoscape_messages_24h.json">💬 Messages - 24 hours</option>
-            <option value="data/cytoscape_neighbors_1h.json">🔗 Neighbors - 1 hour</option>
-            <option value="data/cytoscape_neighbors_3h.json">🔗 Neighbors - 3 hours</option>
-            <option value="data/cytoscape_neighbors_24h.json">🔗 Neighbors - 24 hours</option>
+            <option value="data/cytoscape_messages_physical_15min.json">➽ sender ⤑ to :: 15 minutes</option>
+            <option value="data/cytoscape_messages_physical_30min.json">➽ sender ⤑ to :: 30 minutes</option>
+            <option value="data/cytoscape_messages_physical_1h.json">➽ sender ⤑ to :: 1 hour</option>
+            <option value="data/cytoscape_messages_physical_3h.json">➽ sender ⤑ to :: 3 hours</option>
+            <option value="data/cytoscape_messages_15min.json">💬 from ⤑ to :: 15 minutes</option>
+            <option value="data/cytoscape_messages_30min.json">💬 from ⤑ to :: 30 minutes</option>
+            <option value="data/cytoscape_messages_1h.json" selected="selected">💬 from ⤑ to :: 1 hour</option>
+            <option value="data/cytoscape_messages_3h.json">💬 from ⤑ to :: 3 hours</option>
+            <option value="data/cytoscape_messages_24h.json">💬 from ⤑ to :: 24 hours</option>
+            <option value="data/cytoscape_neighbors_1h.json">🔗 Neighbors :: 1 hour</option>
+            <option value="data/cytoscape_neighbors_3h.json">🔗 Neighbors :: 3 hours</option>
+            <option value="data/cytoscape_neighbors_24h.json">🔗 Neighbors :: 24 hours</option>
         </select>
     </div>
     <div id="cy"></div>
@@ -119,7 +118,7 @@
                                 selector: 'node[role=2]',
                                 style: {
                                     'shape': 'diamond',
-                                    'color': 'red',
+                                    'color': '#825190',
                                     'font-weight': 'bold',
                                     'content': (ele) => `[RTR] ${ele.data('label')}`
                                 }
@@ -128,7 +127,7 @@
                                 selector: 'node[role=3]',
                                 style: {
                                     'shape': 'hexagon',
-                                    'color': 'red',
+                                    'color': '#d314b3',
                                     'font-weight': 'bold',
                                     'content': (ele) => `[RTC] ${ele.data('label')}`
                                 }
@@ -137,7 +136,7 @@
                                 selector: 'node[role=4]',
                                 style: {
                                     'shape': 'triangle',
-                                    'color': 'red',
+                                    'color': '#b95dd9',
                                     'font-weight': 'bold',
                                     'content': (ele) => `[RPT] ${ele.data('label')}`
                                 }
@@ -150,7 +149,7 @@
                                     'line-color': 'mapData(rssi, -120, 0, #f5ba01, #00ff00)',
                                     'target-arrow-color': 'mapData(rssi, -120, 0, #f5ba01, #00ff00)',
                                     'target-arrow-shape': 'triangle',
-                                    'curve-style': 'bezier',
+                                    'curve-style': 'unbundled-bezier',
                                     'label': 'data(label)',
                                     'font-size': '6px',
                                     'text-rotation': 'autorotate',
