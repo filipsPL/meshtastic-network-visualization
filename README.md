@@ -43,7 +43,8 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
 ### 1. Data Collection Daemon (`mesh-collectd.py`)
 - To be run in a background
 - Connects to an MQTT broker to receive messages from Meshtastic devices.
-- Stores message data, node information, and neighbor relationships in an SQLite database.
+- Stores message data, node information, and neighbor relationships in an SQLite database `mqtt_messages.db`.
+  - the initial `mqtt_messages.db` file with some nodes is provided as a hot start
 - Supports reconnection in case of disconnection.
 - Multi-threaded database operations for efficiency.
 
