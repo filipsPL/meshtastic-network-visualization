@@ -91,6 +91,7 @@ def export_to_json(db_path, json_output_path, time_limit_minutes, use_physical_s
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
 
+        current_time = int(datetime.now().timestamp())
         cutoff_time = int((datetime.now() - timedelta(minutes=time_limit_minutes)).timestamp())
 
         # Use physical_sender instead of sender if specified
@@ -99,9 +100,9 @@ def export_to_json(db_path, json_output_path, time_limit_minutes, use_physical_s
         cursor.execute(
             f"""SELECT {sender_field}, receiver, COUNT(*) as count, rssi 
                FROM messages
-               WHERE timestamp >= ?
+               WHERE timestamp >= ? AND timestamp <= ?
                GROUP BY {sender_field}, receiver""",
-            (cutoff_time,),
+            (cutoff_time, current_time),
         )
         rows = cursor.fetchall()
 

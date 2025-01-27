@@ -164,19 +164,35 @@ def on_disconnect(client, userdata, rc):
             time.sleep(5)
 
 
+def sanitize_string(input_str):
+    """
+    Sanitize and clean a string by:
+    1. Converting to ASCII (removing non-ASCII characters)
+    2. Stripping leading and trailing whitespaces
+    3. Replacing multiple whitespaces with a single space
+    """
+    # if not isinstance(input_str, str):
+    #     return input_str
+
+    input_str = str(input_str)
+    
+    # Convert to ASCII, strip, and replace multiple spaces
+    return ' '.join(input_str.encode('ascii', 'ignore').decode('ascii').split())
+
+
 def on_message(client, userdata, msg):
+
+    # https://meshtastic.org/docs/software/integrations/mqtt/
+    # "sender" is the hexadecimal Node ID of the gateway device
+    # "from" is the unique decimal-equivalent Node ID of the node on the mesh that sent this message.
+    # "to" is the decimal-equivalent Node ID of the destination of the message.
+
     try:
         topic = msg.topic
         try:
             payload = json.loads(msg.payload.decode("utf-8"))
         except:
             return
-
-        # https://meshtastic.org/docs/software/integrations/mqtt/
-        # "sender" is the hexadecimal Node ID of the gateway device
-        # "from" is the unique decimal-equivalent Node ID of the node on the mesh that sent this message.
-        # "to" is the decimal-equivalent Node ID of the destination of the message.
-
 
         # Primary node identification using 'from'
         node_id = payload.get("from")
@@ -188,7 +204,7 @@ def on_message(client, userdata, msg):
 
         physical_sender = hex_to_int(payload.get("sender"))
 
-        # pretty pring the message
+        # pretty print the message
         print(
             f"Node {node_id} received message from {receiver} at {timestamp} with RSSI {rssi} and SNR {snr} and type {msg_type}"
         )
@@ -202,8 +218,8 @@ def on_message(client, userdata, msg):
                     (
                         "nodeinfo",
                         node_id,  # Use 'from' as primary identifier
-                        node_payload["longname"].encode('ascii', 'ignore').decode('ascii').strip(),
-                        node_payload["shortname"].encode('ascii', 'ignore').decode('ascii').strip(),
+                        sanitize_string(node_payload["longname"]),
+                        sanitize_string(node_payload["shortname"]),
                         node_payload["hardware"],
                         node_payload["role"],
                         timestamp,
@@ -211,9 +227,8 @@ def on_message(client, userdata, msg):
                 )
                 # print message details in one line
                 print(
-                    f"Node {node_id}: {timestamp} {node_id} |{node_payload['longname']}|{node_payload['longname'].encode('ascii', 'ignore').decode('ascii').strip()}| {node_payload['shortname']} {node_payload['hardware']} {node_payload['role']}"
+                    f"Node {node_id}: {timestamp} {node_id} |{node_payload['longname']}|{sanitize_string(node_payload['longname'])}| {sanitize_string(node_payload['shortname'])} {node_payload['hardware']} {node_payload['role']}"
                 )
-
 
         elif msg_type == "neighborinfo" and "payload" in payload:
             neighbor_payload = payload["payload"]
@@ -223,7 +238,7 @@ def on_message(client, userdata, msg):
 
                 # print message details in one line
                 print(
-                    f"Node {node_id}: {timestamp} {node_id} {node_payload['role']}"
+                    f"Node {node_id}: {timestamp} {node_id} Neighbors: {len(neighbors)}"
                 )
 
         elif msg_type == "position" and "payload" in payload:
@@ -247,7 +262,6 @@ def on_message(client, userdata, msg):
 
                 # print message details in one line
                 print(f"Node {node_id}: {timestamp} {node_id} {latitude} {longitude}")
-
 
     except Exception as e:
         print(f"Error processing message: {e}")
