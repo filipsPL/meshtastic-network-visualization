@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meshtastic Mesh Visualization</title>
+    <script src="js/cytoscape.min.js"></script>
+    <script src="js/layout-base.js"></script>
+    <script src="js/cose-base.js"></script>
+    <script src="js/cytoscape-cose-bilkent.js"></script>
+
+    <style>
+        #cy {
+            width: 100%;
+            height: 90vh;
+            border: 1px solid black;
+        }
+
+        .controls {
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+        }
+
+        select {
+            padding: 5px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <strong>Map of mesh node connections.</strong> Updated: <span id="whenupdated"></span>
+    <div class="controls">
+        <select id="fileSelect">
+            <option value="data/cytoscape_messages_physical_15min.json">➽ sender ⤑ to :: 15 minutes</option>
+            <option value="data/cytoscape_messages_physical_30min.json">➽ sender ⤑ to :: 30 minutes</option>
+            <option value="data/cytoscape_messages_physical_1h.json">➽ sender ⤑ to :: 1 hour</option>
+            <option value="data/cytoscape_messages_physical_3h.json">➽ sender ⤑ to :: 3 hours</option>
+            <option value="data/cytoscape_messages_15min.json">💬 from ⤑ to :: 15 minutes</option>
+            <option value="data/cytoscape_messages_30min.json">💬 from ⤑ to :: 30 minutes</option>
+            <option value="data/cytoscape_messages_1h.json" selected="selected">💬 from ⤑ to :: 1 hour</option>
+            <option value="data/cytoscape_messages_3h.json">💬 from ⤑ to :: 3 hours</option>
+            <option value="data/cytoscape_messages_24h.json">💬 from ⤑ to :: 24 hours</option>
+            <option value="data/cytoscape_neighbors_1h.json">🔗 Neighbors :: 1 hour</option>
+            <option value="data/cytoscape_neighbors_3h.json">🔗 Neighbors :: 3 hours</option>
+            <option value="data/cytoscape_neighbors_24h.json">🔗 Neighbors :: 24 hours</option>
+        </select>
+    </div>
+    <div id="cy"></div>
+    <script>
+        let cy; // Define cy in global scope
+
+        function loadData(filename) {
+            fetch(filename)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Process elements
+                    const elements = data.map(item => {
+                        if (item.data.source && item.data.target) {
+                            // Process edges with RSSI and SNR
+                            return {
+                                data: {
+                                    id: item.data.id,
+                                    source: item.data.source,
+                                    target: item.data.target,
+                                    rssi: item.data.rssi,
+                                    count: item.data.count,
+                                }
+                            };
+                        } else {
+                            // Process nodes
+                            return {
+                                data: {
+                                    id: item.data.id,
+                                    label: item.data.label,
+                                    connections: item.data.connections,
+                                    role: item.data.role,
+                                }
+                            };
+                        }
+                    });
+
+                    // If cy already exists, destroy it
+                    if (cy) {
+                        cy.destroy();
+                    }
+
+                    // Initialize Cytoscape.js
+                    cy = cytoscape({
+                        container: document.getElementById('cy'),
+                        wheelSensitivity: 0.2,
+                        elements: elements,
+                        style: [
+                            {
+                                selector: 'node',
+                                style: {
+                                    'label': 'data(label)',
+                                    'color': '#0d1a47',
+                                    'text-valign': 'center',
+                                    'text-halign': 'center',
+                                    'font-size': 'mapData(connections, 1, 10, 6, 16)',
+                                    width: 'mapData(connections, 1, 10, 50, 90)',
+                                    height: 'mapData(connections, 1, 10, 20, 60)',
+                                    'background-color': 'mapData(connections, 1, 10, #d2dbfa, #003aff)',
+                                    'shape': 'round-rectangle'
+                                }
+
+                            },
+
+                            {
+                                selector: 'node[role=2]',
+                                style: {
+                                    'shape': 'diamond',
+                                    'color': '#825190',
+                                    'font-weight': 'bold',
+                                    'content': (ele) => `[RTR] ${ele.data('label')}`
+                                }
+                            },
+                            {
+                                selector: 'node[role=3]',
+                                style: {
+                                    'shape': 'hexagon',
+                                    'color': '#d314b3',
+                                    'font-weight': 'bold',
+                                    'content': (ele) => `[RTC] ${ele.data('label')}`
+                                }
+                            },
+                            {
+                                selector: 'node[role=4]',
+                                style: {
+                                    'shape': 'triangle',
+                                    'color': '#b95dd9',
+                                    'font-weight': 'bold',
+                                    'content': (ele) => `[RPT] ${ele.data('label')}`
+                                }
+                            },
+
+                            {
+                                selector: 'edge',
+                                style: {
+                                    'width': 'mapData(count, 1, 10, 0.2, 5)',
+                                    'line-color': 'mapData(rssi, -120, 0, #f5ba01, #00ff00)',
+                                    'target-arrow-color': 'mapData(rssi, -120, 0, #f5ba01, #00ff00)',
+                                    'target-arrow-shape': 'triangle',
+                                    'curve-style': 'unbundled-bezier',
+                                    'label': 'data(label)',
+                                    'font-size': '6px',
+                                    'text-rotation': 'autorotate',
+                                }
+                            }
+                        ],
+                        layout: {
+                            name: "cose-bilkent",
+                            animate: false,
+                            idealEdgeLength: 100,
+                            randomize: true,
+                            nodeRepulsion: 7000,
+                            edgeElasticity: 0.45,
+                            nestingFactor: 10.1,
+                            numIter: 30000,
+                            gravity: 0.25,
+                            tile: true
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+
+            // Update the timestamp
+            fetch('data/cytoscape_data.txt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error " + response.status);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    document.getElementById("whenupdated").innerHTML = text;
+                })
+                .catch(error => {
+                    // Handle/report error
+                });
+        }
+
+        // Add event listener for dropdown changes
+        document.getElementById('fileSelect').addEventListener('change', function () {
+            loadData(this.value);
+        });
+
+        // Load initial data
+        loadData(document.getElementById('fileSelect').value);
+    </script>
+</body>
+
+</html>

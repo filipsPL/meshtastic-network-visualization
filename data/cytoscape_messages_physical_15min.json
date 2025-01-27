@@ -1,0 +1,146 @@
+[
+  {
+    "data": {
+      "id": "!da5acdf4",
+      "label": "flp3",
+      "role": 0,
+      "connections": 8
+    }
+  },
+  {
+    "data": {
+      "id": "!2f81d814",
+      "label": "!2f81d814",
+      "role": null,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!2f958c30",
+      "label": "LM03",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!2f9593c8",
+      "label": "ALF_",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!336023b0",
+      "label": "Ox2M",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!435a8788",
+      "label": "GT02",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!90a10318",
+      "label": "!90a10318",
+      "role": null,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da545dd0",
+      "label": "!da545dd0",
+      "role": null,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da568aac",
+      "label": "Y13",
+      "role": 3,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!2f81d814",
+      "source": "!da5acdf4",
+      "target": "!2f81d814",
+      "rssi": -114.0,
+      "count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!2f958c30",
+      "source": "!da5acdf4",
+      "target": "!2f958c30",
+      "rssi": -133.0,
+      "count": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!2f9593c8",
+      "source": "!da5acdf4",
+      "target": "!2f9593c8",
+      "rssi": -115.0,
+      "count": 7
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!336023b0",
+      "source": "!da5acdf4",
+      "target": "!336023b0",
+      "rssi": -116.0,
+      "count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!435a8788",
+      "source": "!da5acdf4",
+      "target": "!435a8788",
+      "rssi": -117.0,
+      "count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!90a10318",
+      "source": "!da5acdf4",
+      "target": "!90a10318",
+      "rssi": -115.0,
+      "count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!da545dd0",
+      "source": "!da5acdf4",
+      "target": "!da545dd0",
+      "rssi": -113.0,
+      "count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!da568aac",
+      "source": "!da5acdf4",
+      "target": "!da568aac",
+      "rssi": -116.0,
+      "count": 2
+    }
+  }
+]
