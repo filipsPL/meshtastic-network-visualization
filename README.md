@@ -59,6 +59,7 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
 - An interactive web interface to visualize mesh network connections using Cytoscape.js.
 - Three modes of visualization:
   - **Messages** - showing `from` and `to` of messages passed through the network
+  - **Traceroute** - showing nodes from traceroute requests 🆕
   - **Physical sender** - showing `sender` and `to` of messages passed through the network *(prototype)*
   - **Neighbors** - showing connections reported by nodes as `neighbors` *(early prototype)*
 
@@ -121,9 +122,12 @@ Open `index.html` in a web browser (you may need to run it in a web server to ac
 ### Modes
 
 
-| Message flow | Node interactions (beta stage) | Neighbours (alpha stage)|
-| --- | --- | ---- |
-| ![alt text](obrazki/obrazek-README-1.png) |  ![alt text](obrazki/obrazek-README-2.png)|  ![alt text](obrazki/obrazek-README-3.png) |
+| Message flow                                | Node interactions (beta stage)            | Neighbours (alpha stage)                  |
+| ------------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| ![alt text](obrazki/obrazek-README-1.png)   | ![alt text](obrazki/obrazek-README-2.png) | ![alt text](obrazki/obrazek-README-3.png) |
+| Traceroute                                  |                                           |                                           |
+| ![traceroute](obrazki/obrazek-README-4.png) |                                           |                                           |
+
 
 
 
