@@ -1,0 +1,106 @@
+[
+  {
+    "data": {
+      "id": "CM",
+      "label": "CM",
+      "role": 0,
+      "connections": 4,
+      "original_name": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "DM01",
+      "label": "DM01",
+      "role": 0,
+      "connections": 1,
+      "original_name": "Doman [DM01|mobile|868]"
+    }
+  },
+  {
+    "data": {
+      "id": "PS1",
+      "label": "PS1",
+      "role": 0,
+      "connections": 1,
+      "original_name": "PS5PS 1"
+    }
+  },
+  {
+    "data": {
+      "id": "KMT",
+      "label": "KMT",
+      "role": 0,
+      "connections": 1,
+      "original_name": "Komin|Turow"
+    }
+  },
+  {
+    "data": {
+      "id": "KRNS",
+      "label": "KRNS",
+      "role": 0,
+      "connections": 2,
+      "original_name": "Korniszon"
+    }
+  },
+  {
+    "data": {
+      "id": "SSG1",
+      "label": "SSG1",
+      "role": 1,
+      "connections": 1,
+      "original_name": "Wbijaj \u0000\u0000\u0000\u0000 https://tinyurl.com/wa-node"
+    }
+  },
+  {
+    "data": {
+      "id": "CM_DM01",
+      "source": "CM",
+      "target": "DM01",
+      "count": 1,
+      "original_source": "Cichy Mesh",
+      "original_target": "Doman [DM01|mobile|868]"
+    }
+  },
+  {
+    "data": {
+      "id": "CM_PS1",
+      "source": "CM",
+      "target": "PS1",
+      "count": 2,
+      "original_source": "Cichy Mesh",
+      "original_target": "PS5PS 1"
+    }
+  },
+  {
+    "data": {
+      "id": "KMT_CM",
+      "source": "KMT",
+      "target": "CM",
+      "count": 1,
+      "original_source": "Komin|Turow",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "KRNS_CM",
+      "source": "KRNS",
+      "target": "CM",
+      "count": 4,
+      "original_source": "Korniszon",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "SSG1_KRNS",
+      "source": "SSG1",
+      "target": "KRNS",
+      "count": 4,
+      "original_source": "Wbijaj \u0000\u0000\u0000\u0000 https://tinyurl.com/wa-node",
+      "original_target": "Korniszon"
+    }
+  }
+]

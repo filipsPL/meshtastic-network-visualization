@@ -4,7 +4,7 @@
       "id": "!da5acdf4",
       "label": "flp3",
       "role": 0,
-      "connections": 3
+      "connections": 4
     }
   },
   {
@@ -25,6 +25,14 @@
   },
   {
     "data": {
+      "id": "!b03bbe9c",
+      "label": "flp5",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
       "id": "!da5687b0",
       "label": "!da5687b0",
       "role": null,
@@ -38,7 +46,7 @@
       "target": "!2f9f7008",
       "snr": 2.0,
       "weight": 2,
-      "appearance_count": 10
+      "appearance_count": 5
     }
   },
   {
@@ -48,7 +56,17 @@
       "target": "!4eee6e7f",
       "snr": -12.0,
       "weight": 1,
-      "appearance_count": 5
+      "appearance_count": 4
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!b03bbe9c",
+      "source": "!da5acdf4",
+      "target": "!b03bbe9c",
+      "snr": 11.0,
+      "weight": 2,
+      "appearance_count": 16
     }
   },
   {
@@ -56,9 +74,9 @@
       "id": "!da5acdf4_!da5687b0",
       "source": "!da5acdf4",
       "target": "!da5687b0",
-      "snr": 0.0,
-      "weight": 1,
-      "appearance_count": 1
+      "snr": 6.0,
+      "weight": 2,
+      "appearance_count": 2
     }
   }
 ]
