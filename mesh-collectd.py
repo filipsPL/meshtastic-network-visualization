@@ -61,6 +61,15 @@ def init_db(db_path="mqtt_messages.db"):
            )"""
     )
 
+    cursor.execute(
+        """CREATE TABLE IF NOT EXISTS traceroutes (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               from_node TEXT,
+               to_node TEXT,
+               timestamp INTEGER
+           )"""
+    )
+
     conn.commit()
     return conn
 
@@ -85,6 +94,24 @@ def save_nodeinfo_to_db(conn, node_id, longname=None, shortname=None, hardware=N
         conn.commit()
     except Exception as e:
         print(f"Error saving node info: {e}")
+
+def save_traceroute_to_db(conn, route, timestamp):
+    cursor = conn.cursor()
+    try:
+        # Process each consecutive pair in the route
+        for i in range(len(route) - 1):
+            from_node = sanitize_string(route[i])
+            to_node = sanitize_string(route[i + 1])
+
+            if 'Unknown' not in [from_node, to_node]:
+                cursor.execute(
+                    """INSERT INTO traceroutes (from_node, to_node, timestamp)
+                    VALUES (?, ?, ?)""",
+                    (from_node, to_node, timestamp)
+                )
+            conn.commit()
+    except Exception as e:
+        print(f"Error saving traceroute info: {e}")
 
 
 def save_message_to_db(conn, topic, sender, receiver, physical_sender, timestamp, rssi, snr, type):
@@ -129,6 +156,8 @@ def db_worker(queue, db_path):
                 save_neighbors_to_db(conn, *item[1:])
             elif item[0] == "position":
                 save_nodeinfo_to_db(conn, *item[1:])
+            elif item[0] == "traceroute":
+                save_traceroute_to_db(conn, *item[1:])
         except Exception as e:
             print(f"Database error: {e}")
     conn.close()
@@ -240,6 +269,21 @@ def on_message(client, userdata, msg):
                 print(
                     f"Node {node_id}: {timestamp} {node_id} Neighbors: {len(neighbors)}"
                 )
+
+
+        elif msg_type == "traceroute" and "payload" in payload:
+            route_payload = payload["payload"]
+            if "route" in route_payload:
+                route = route_payload["route"]
+                current_time = int(time.time())  # Get current Unix timestamp
+                userdata.put(("traceroute", route, current_time))
+                
+                # Print the route pairs
+                route_pairs = [f"{route[i]} -> {route[i+1]}" 
+                             for i in range(len(route)-1)]
+                print(f"Traceroute at {timestamp} with pairs:")
+                for pair in route_pairs:
+                    print(f"  {pair}")
 
         elif msg_type == "position" and "payload" in payload:
             pos_payload = payload["payload"]
