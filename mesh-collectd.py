@@ -18,13 +18,55 @@ def load_config(config_path="config.json"):
         exit(1)
 
 
+def log_message(msg_type, node_id, details):
+    """
+    Standardized logging function that formats all messages consistently.
+
+    Args:
+        msg_type (str): Type of message (MESSAGE, NODEINFO, NEIGHBORS, POSITION, TRACEROUTE)
+        node_id: ID of the node
+        details (dict): Additional details to log
+    """
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    base_info = f"[{timestamp}] [{msg_type}] Node {node_id}"
+
+    if msg_type == "MESSAGE":
+        print(
+            f"{base_info} → {details['receiver']} | "
+            f"Type: {details['type']} | RSSI: {details['rssi']} | "
+            f"SNR: {details['snr']} | Physical Sender: {details['physical_sender']}"
+        )
+
+    elif msg_type == "NODEINFO":
+        print(
+            f"{base_info} | "
+            f"Long: {details['longname']} | Short: {details['shortname']} | "
+            f"HW: {details['hardware']} | Role: {details['role']}"
+        )
+
+    elif msg_type == "NEIGHBORS":
+        print(f"{base_info} | Neighbor count: {details['count']}")
+        for neighbor in details["neighbors"]:
+            print(f"    → Neighbor {neighbor['node_id']} | SNR: {neighbor.get('snr', 'N/A')}")
+
+    elif msg_type == "POSITION":
+        print(f"{base_info} | " f"Lat: {details['latitude']:.5f} | Lon: {details['longitude']:.5f}")
+
+    elif msg_type == "TRACEROUTE":
+        print(f"{base_info} | Route length: {len(details['route'])}")
+        for i in range(len(details["route"]) - 1):
+            print(f"    {details['route'][i]} → {details['route'][i+1]}")
+
+
 def init_db(db_path="mqtt_messages.db"):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
+    # Drop and recreate nodes table with explicit PRIMARY KEY constraint
+    cursor.execute("DROP TABLE IF EXISTS nodes")
     cursor.execute(
-        """CREATE TABLE IF NOT EXISTS nodes (
-               id INTEGER PRIMARY KEY,
+        """CREATE TABLE nodes (
+               id INTEGER NOT NULL PRIMARY KEY,
                longname TEXT,
                shortname TEXT,
                hardware INTEGER,
@@ -78,22 +120,15 @@ def save_nodeinfo_to_db(conn, node_id, longname=None, shortname=None, hardware=N
     cursor = conn.cursor()
     try:
         cursor.execute(
-            """INSERT INTO nodes (id, longname, shortname, hardware, role, last_seen, latitude, longitude)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-               ON CONFLICT(id) DO UPDATE SET
-               longname=COALESCE(?, nodes.longname),
-               shortname=COALESCE(?, nodes.shortname),
-               hardware=COALESCE(?, nodes.hardware),
-               role=COALESCE(?, nodes.role),
-               last_seen=MAX(excluded.last_seen, nodes.last_seen),
-               latitude=COALESCE(?, nodes.latitude),
-               longitude=COALESCE(?, nodes.longitude)""",
-            (node_id, longname, shortname, hardware, role, timestamp, latitude, longitude,
-             longname, shortname, hardware, role, latitude, longitude)
+            """INSERT OR REPLACE INTO nodes (id, longname, shortname, hardware, role, last_seen, latitude, longitude)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+            (node_id, longname, shortname, hardware, role, timestamp, latitude, longitude)
         )
         conn.commit()
     except Exception as e:
         print(f"Error saving node info: {e}")
+        conn.rollback()
+
 
 def save_traceroute_to_db(conn, route, timestamp):
     cursor = conn.cursor()
@@ -103,11 +138,11 @@ def save_traceroute_to_db(conn, route, timestamp):
             from_node = sanitize_string(route[i])
             to_node = sanitize_string(route[i + 1])
 
-            if 'Unknown' not in [from_node, to_node]:
+            if "Unknown" not in [from_node, to_node]:
                 cursor.execute(
                     """INSERT INTO traceroutes (from_node, to_node, timestamp)
                     VALUES (?, ?, ?)""",
-                    (from_node, to_node, timestamp)
+                    (from_node, to_node, timestamp),
                 )
             conn.commit()
     except Exception as e:
@@ -204,18 +239,12 @@ def sanitize_string(input_str):
     #     return input_str
 
     input_str = str(input_str)
-    
+
     # Convert to ASCII, strip, and replace multiple spaces
-    return ' '.join(input_str.encode('ascii', 'ignore').decode('ascii').split())
+    return " ".join(input_str.encode("ascii", "ignore").decode("ascii").split())
 
 
 def on_message(client, userdata, msg):
-
-    # https://meshtastic.org/docs/software/integrations/mqtt/
-    # "sender" is the hexadecimal Node ID of the gateway device
-    # "from" is the unique decimal-equivalent Node ID of the node on the mesh that sent this message.
-    # "to" is the decimal-equivalent Node ID of the destination of the message.
-
     try:
         topic = msg.topic
         try:
@@ -223,30 +252,37 @@ def on_message(client, userdata, msg):
         except:
             return
 
-        # Primary node identification using 'from'
         node_id = payload.get("from")
         receiver = payload.get("to")
         timestamp = payload.get("timestamp")
         rssi = payload.get("rssi")
         snr = payload.get("snr")
         msg_type = payload.get("type")
-
         physical_sender = hex_to_int(payload.get("sender"))
 
-        # pretty print the message
-        print(
-            f"Node {node_id} received message from {receiver} at {timestamp} with RSSI {rssi} and SNR {snr} and type {msg_type}"
-        )
+        # Log base message information
+        log_message("MESSAGE", node_id, {"receiver": receiver, "type": msg_type, "rssi": rssi, "snr": snr, "physical_sender": physical_sender})
 
         userdata.put(("message", topic, node_id, receiver, physical_sender, timestamp, rssi, snr, msg_type))
 
         if msg_type == "nodeinfo" and "payload" in payload:
             node_payload = payload["payload"]
             if all(k in node_payload for k in ["id", "longname", "shortname", "hardware", "role"]):
+                log_message(
+                    "NODEINFO",
+                    node_id,
+                    {
+                        "longname": sanitize_string(node_payload["longname"]),
+                        "shortname": sanitize_string(node_payload["shortname"]),
+                        "hardware": node_payload["hardware"],
+                        "role": node_payload["role"],
+                    },
+                )
+
                 userdata.put(
                     (
                         "nodeinfo",
-                        node_id,  # Use 'from' as primary identifier
+                        node_id,
                         sanitize_string(node_payload["longname"]),
                         sanitize_string(node_payload["shortname"]),
                         node_payload["hardware"],
@@ -254,61 +290,49 @@ def on_message(client, userdata, msg):
                         timestamp,
                     )
                 )
-                # print message details in one line
-                print(
-                    f"Node {node_id}: {timestamp} {node_id} |{node_payload['longname']}|{sanitize_string(node_payload['longname'])}| {sanitize_string(node_payload['shortname'])} {node_payload['hardware']} {node_payload['role']}"
-                )
 
         elif msg_type == "neighborinfo" and "payload" in payload:
             neighbor_payload = payload["payload"]
             if "node_id" in neighbor_payload and "neighbors" in neighbor_payload:
                 neighbors = neighbor_payload["neighbors"]
+                log_message("NEIGHBORS", node_id, {"count": len(neighbors), "neighbors": neighbors})
+
                 userdata.put(("neighbors", node_id, neighbors, timestamp))
-
-                # print message details in one line
-                print(
-                    f"Node {node_id}: {timestamp} {node_id} Neighbors: {len(neighbors)}"
-                )
-
 
         elif msg_type == "traceroute" and "payload" in payload:
             route_payload = payload["payload"]
             if "route" in route_payload:
                 route = route_payload["route"]
-                current_time = int(time.time())  # Get current Unix timestamp
+                current_time = int(time.time())
+
+                log_message("TRACEROUTE", node_id, {"route": route})
+
                 userdata.put(("traceroute", route, current_time))
-                
-                # Print the route pairs
-                route_pairs = [f"{route[i]} -> {route[i+1]}" 
-                             for i in range(len(route)-1)]
-                print(f"Traceroute at {timestamp} with pairs:")
-                for pair in route_pairs:
-                    print(f"  {pair}")
 
         elif msg_type == "position" and "payload" in payload:
             pos_payload = payload["payload"]
             if all(k in pos_payload for k in ["latitude_i", "longitude_i"]):
-                latitude = f"{(int(pos_payload['latitude_i']) * 1e-7):.5f}"
-                longitude = f"{(int(pos_payload['longitude_i']) * 1e-7):.5f}"
+                latitude = float(int(pos_payload["latitude_i"]) * 1e-7)
+                longitude = float(int(pos_payload["longitude_i"]) * 1e-7)
+
+                log_message("POSITION", node_id, {"latitude": latitude, "longitude": longitude})
+
                 userdata.put(
                     (
                         "position",
-                        node_id,  # Use 'from' as primary identifier
-                        None,  # longname
-                        None,  # shortname
-                        None,  # hardware
-                        None,  # role
+                        node_id,
+                        None,
+                        None,
+                        None,
+                        None,
                         timestamp,
-                        float(latitude),
-                        float(longitude),
+                        latitude,
+                        longitude,
                     )
                 )
 
-                # print message details in one line
-                print(f"Node {node_id}: {timestamp} {node_id} {latitude} {longitude}")
-
     except Exception as e:
-        print(f"Error processing message: {e}")
+        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [ERROR] Error processing message: {e}")
 
 
 # Load configuration
