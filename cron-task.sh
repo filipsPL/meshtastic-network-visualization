@@ -13,7 +13,7 @@ cd /home/user/meshtastic-network-visualization/
 python sqlite2json.py
 
 # copy the json to the webserver
-cp data/cytoscape_*.json /var/www/meshtastic-network-visualization/data/
+cp data/*.json /var/www/meshtastic-network-visualization/data/
 
 # update the cytoscape data file
 LC_TIME=C date > /var/www/rzeczy/cyto-mesh/data/cytoscape_data.txt
