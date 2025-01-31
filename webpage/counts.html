@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Count Visualization</title>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.1/plotly.min.js"></script> -->
+    <script src="https://cdn.plot.ly/plotly-3.0.0.min.js" charset="utf-8"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        #metadata {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Message Count Visualization</h1>
+        
+        <div class="controls">
+            <label for="timeRange">Select Time Range:</label>
+            <select id="timeRange" onchange="loadData()">
+                <option value="1">Last 24 Hours</option>
+                <option value="7">Last 7 Days</option>
+            </select>
+        </div>
+
+        <div id="plot"></div>
+        <div id="metadata"></div>
+    </div>
+
+    <script>
+        async function loadData() {
+            const days = document.getElementById('timeRange').value;
+            const filename = `data/hourly_messages_${days}d.json`;
+            
+            try {
+                const response = await fetch(filename);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // Create the bar plot
+                const trace = {
+                    x: data.x,
+                    y: data.y,
+                    type: 'bar',
+                    marker: {
+                        color: '#1f77b4',
+                        opacity: 0.8
+                    }
+                };
+
+                const layout = {
+                    title: `Message Count by Hour (Past ${days} ${days == 1 ? 'Day' : 'Days'})`,
+                    xaxis: {
+                        title: 'Time',
+                        tickangle: -45
+                    },
+                    yaxis: {
+                        title: 'Number of Messages'
+                    },
+                    bargap: 0.05,
+                    height: 600
+                };
+
+                Plotly.newPlot('plot', [trace], layout);
+
+                // Update metadata display
+                const metadata = data.metadata;
+                document.getElementById('metadata').innerHTML = `
+                    <h3>Summary Statistics</h3>
+                    <p>Total Messages: ${metadata.total_messages.toLocaleString()}</p>
+                    <p>Average Messages per Hour: ${metadata.average_messages_per_hour.toFixed(1)}</p>
+                    <p>Generated at: ${new Date(metadata.generated_at).toLocaleString()}</p>
+                `;
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('plot').innerHTML = `
+                    <p style="color: red">Error loading data. Please check if the file exists and try again.</p>
+                `;
+                document.getElementById('metadata').innerHTML = '';
+            }
+        }
+
+        // Load initial data when page loads
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>

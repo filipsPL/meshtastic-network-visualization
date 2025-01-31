@@ -248,9 +248,10 @@ def export_traceroutes_to_json(db_path, json_output_path, time_limit_minutes):
             conn.close()
 
 
-def plot_hourly_messages(db_path, days=1):
+def export_hourly_messages(db_path, days=1):
     """
-    Plot the number of messages received in each hour for the past N days.
+    Export the number of messages received in each hour for the past N days to a JSON file.
+    The output format is compatible with Plotly visualization.
     
     Parameters:
     db_path (str): Path to the SQLite database
@@ -277,39 +278,37 @@ def plot_hourly_messages(db_path, days=1):
         
         rows = cursor.fetchall()
         
-        # Convert to lists for plotting
-        hours = []
-        counts = []
+        # Create data structure for Plotly
+        plotly_data = {
+            "x": [],  # timestamps
+            "y": [],  # message counts
+            "metadata": {
+                "days": days,
+                "generated_at": datetime.now().isoformat(),
+                "total_messages": 0,
+                "average_messages_per_hour": 0
+            }
+        }
+        
+        # Process the data
         for row in rows:
             hour_str, count = row
-            hours.append(datetime.strptime(hour_str, '%Y-%m-%d %H:%M:%S'))
-            counts.append(count)
+            plotly_data["x"].append(hour_str)
+            plotly_data["y"].append(count)
+            plotly_data["metadata"]["total_messages"] += count
             
-        # Create the plot
-        plt.figure(figsize=(12, 6))
-        plt.bar(hours, counts, width=1/24)  # width=1/24 represents one hour
-        
-        # Format x-axis
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:00'))
-        plt.gcf().autofmt_xdate()  # Rotate and align the tick labels
-        
-        # Add labels and title
-        plt.xlabel('Time')
-        plt.ylabel('Number of Messages')
-        plt.title(f'Message Count by Hour (Past {days} {"Day" if days == 1 else "Days"})')
-        
-        # Add grid for better readability
-        plt.grid(True, alpha=0.3)
-        
-        # Adjust layout to prevent label cutoff
-        plt.tight_layout()
-        
-        # Save the plot
-        output_path = f"{data}/message_count_{days}d.png"
-        plt.savefig(output_path)
-        plt.close()
-        
-        print(f"Plot saved to {output_path}")
+        # Calculate average messages per hour
+        if len(rows) > 0:
+            plotly_data["metadata"]["average_messages_per_hour"] = (
+                plotly_data["metadata"]["total_messages"] / len(rows)
+            )
+            
+        # Save to JSON file
+        output_path = f"{data}/hourly_messages_{days}d.json"
+        with open(output_path, "w") as f:
+            json.dump(plotly_data, f, indent=2)
+            
+        print(f"Hourly message data exported to {output_path}")
         
     except sqlite3.Error as e:
         print(f"Database error: {e}")
@@ -350,5 +349,5 @@ if __name__ == "__main__":
         export_traceroutes_to_json(db_path, traceroutes_json, minutes) 
 
     print("\nGenerating message count plots...")
-    plot_hourly_messages(db_path, days=1)  # 1-day plot
-    plot_hourly_messages(db_path, days=7)  # 7-day plot
+    export_hourly_messages(db_path, days=1)  # 1-day plot
+    export_hourly_messages(db_path, days=7)  # 7-day plot
