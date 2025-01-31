@@ -62,6 +62,7 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
   - **Traceroute** - showing nodes from traceroute requests 🆕
   - **Physical sender** - showing `sender` and `to` of messages passed through the network *(prototype)*
   - **Neighbors** - showing connections reported by nodes as `neighbors` *(early prototype)*
+- Three layouts: Cose-Bilkent, Circle, and Concentric
 
 ### 4. Auxiliary script to dump and copy data (`cron-task.sh`)
 - to be run from cron
