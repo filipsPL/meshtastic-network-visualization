@@ -3,6 +3,10 @@ import json
 from datetime import datetime, timedelta
 from collections import defaultdict
 
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+
 data = "data"  # data directory
 
 
@@ -174,13 +178,14 @@ def export_traceroutes_to_json(db_path, json_output_path, time_limit_minutes):
         cursor = conn.cursor()
 
         cutoff_time = int((datetime.now() - timedelta(minutes=time_limit_minutes)).timestamp())
+        current_time = int(datetime.now().timestamp())
 
         cursor.execute(
             """SELECT from_node, to_node, COUNT(*) as count
                FROM traceroutes
-               WHERE timestamp >= ?
+               WHERE timestamp >= ? AND timestamp <= ?
                GROUP BY from_node, to_node""",
-            (cutoff_time,),
+            (cutoff_time,current_time),
         )
         rows = cursor.fetchall()
 
@@ -243,6 +248,77 @@ def export_traceroutes_to_json(db_path, json_output_path, time_limit_minutes):
             conn.close()
 
 
+def plot_hourly_messages(db_path, days=1):
+    """
+    Plot the number of messages received in each hour for the past N days.
+    
+    Parameters:
+    db_path (str): Path to the SQLite database
+    days (int): Number of days to look back (default: 1)
+    """
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        # Calculate the cutoff timestamp
+        cutoff_time = int((datetime.now() - timedelta(days=days)).timestamp())
+        current_time = int(datetime.now().timestamp())
+        
+        # Query to get message counts by hour
+        cursor.execute("""
+            SELECT 
+                strftime('%Y-%m-%d %H:00:00', datetime(timestamp, 'unixepoch', 'localtime')) as hour,
+                COUNT(*) as message_count
+            FROM messages 
+            WHERE timestamp >= ? AND timestamp <= ?
+            GROUP BY hour
+            ORDER BY hour
+        """, (cutoff_time,current_time))
+        
+        rows = cursor.fetchall()
+        
+        # Convert to lists for plotting
+        hours = []
+        counts = []
+        for row in rows:
+            hour_str, count = row
+            hours.append(datetime.strptime(hour_str, '%Y-%m-%d %H:%M:%S'))
+            counts.append(count)
+            
+        # Create the plot
+        plt.figure(figsize=(12, 6))
+        plt.bar(hours, counts, width=1/24)  # width=1/24 represents one hour
+        
+        # Format x-axis
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:00'))
+        plt.gcf().autofmt_xdate()  # Rotate and align the tick labels
+        
+        # Add labels and title
+        plt.xlabel('Time')
+        plt.ylabel('Number of Messages')
+        plt.title(f'Message Count by Hour (Past {days} {"Day" if days == 1 else "Days"})')
+        
+        # Add grid for better readability
+        plt.grid(True, alpha=0.3)
+        
+        # Adjust layout to prevent label cutoff
+        plt.tight_layout()
+        
+        # Save the plot
+        output_path = f"{data}/message_count_{days}d.png"
+        plt.savefig(output_path)
+        plt.close()
+        
+        print(f"Plot saved to {output_path}")
+        
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        if conn:
+            conn.close()
+
 if __name__ == "__main__":
     db_path = "mqtt_messages.db"
     time_windows = [15, 30, 60, 3 * 60, 24 * 60]
@@ -272,3 +348,7 @@ if __name__ == "__main__":
         export_to_json(db_path, messages_physical_json, minutes, use_physical_sender=True)
         export_neighbors_to_json(db_path, neighbors_json, minutes)
         export_traceroutes_to_json(db_path, traceroutes_json, minutes) 
+
+    print("\nGenerating message count plots...")
+    plot_hourly_messages(db_path, days=1)  # 1-day plot
+    plot_hourly_messages(db_path, days=7)  # 7-day plot
