@@ -250,8 +250,8 @@ def export_traceroutes_to_json(db_path, json_output_path, time_limit_minutes):
 
 def export_hourly_messages(db_path, days=1):
     """
-    Export the number of messages received in each hour for the past N days to a JSON file.
-    The output format is compatible with Plotly visualization.
+    Export the number of messages received in each hour for the past N days to a JSON file,
+    broken down by message type.
     
     Parameters:
     db_path (str): Path to the SQLite database
@@ -265,50 +265,70 @@ def export_hourly_messages(db_path, days=1):
         cutoff_time = int((datetime.now() - timedelta(days=days)).timestamp())
         current_time = int(datetime.now().timestamp())
         
-        # Query to get message counts by hour
+        # Query to get message counts by hour and type
         cursor.execute("""
             SELECT 
                 strftime('%Y-%m-%d %H:00:00', datetime(timestamp, 'unixepoch', 'localtime')) as hour,
+                type,
                 COUNT(*) as message_count
             FROM messages 
             WHERE timestamp >= ? AND timestamp <= ?
-            GROUP BY hour
-            ORDER BY hour
+            GROUP BY hour, type
+            ORDER BY hour, type
         """, (cutoff_time,current_time))
         
         rows = cursor.fetchall()
         
+        # Process data into format suitable for stacked bar chart
+        hours = []
+        message_types = set()
+        hour_type_counts = defaultdict(lambda: defaultdict(int))
+        
+        for row in rows:
+            hour_str, msg_type, count = row
+            hours.append(hour_str)
+            message_types.add(msg_type)
+            hour_type_counts[hour_str][msg_type] = count
+        
+        hours = sorted(set(hours))
+        message_types = sorted(message_types)
+        
         # Create data structure for Plotly
         plotly_data = {
-            "x": [],  # timestamps
-            "y": [],  # message counts
+            "x": hours,
+            "types": list(message_types),
+            "data": {},
             "metadata": {
                 "days": days,
                 "generated_at": datetime.now().isoformat(),
                 "total_messages": 0,
-                "average_messages_per_hour": 0
+                "messages_by_type": defaultdict(int)
             }
         }
         
-        # Process the data
-        for row in rows:
-            hour_str, count = row
-            plotly_data["x"].append(hour_str)
-            plotly_data["y"].append(count)
-            plotly_data["metadata"]["total_messages"] += count
-            
-        # Calculate average messages per hour
-        if len(rows) > 0:
-            plotly_data["metadata"]["average_messages_per_hour"] = (
-                plotly_data["metadata"]["total_messages"] / len(rows)
-            )
+        # Fill in the data for each type
+        for msg_type in message_types:
+            plotly_data["data"][msg_type] = []
+            for hour in hours:
+                count = hour_type_counts[hour][msg_type]
+                plotly_data["data"][msg_type].append(count)
+                plotly_data["metadata"]["total_messages"] += count
+                plotly_data["metadata"]["messages_by_type"][msg_type] += count
+        
+        # Calculate percentages for each type
+        total = plotly_data["metadata"]["total_messages"]
+        if total > 0:
+            for msg_type in message_types:
+                plotly_data["metadata"]["messages_by_type"][f"{msg_type}_percentage"] = (
+                    plotly_data["metadata"]["messages_by_type"][msg_type] / total * 100
+                )
             
         # Save to JSON file
-        output_path = f"{data}/hourly_messages_{days}d.json"
+        output_path = f"{data}/hourly_messages_by_type_{days}d.json"
         with open(output_path, "w") as f:
             json.dump(plotly_data, f, indent=2)
             
-        print(f"Hourly message data exported to {output_path}")
+        print(f"Hourly message data by type exported to {output_path}")
         
     except sqlite3.Error as e:
         print(f"Database error: {e}")

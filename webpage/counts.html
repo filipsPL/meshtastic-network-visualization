@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message Count Visualization</title>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.1/plotly.min.js"></script> -->
     <script src="https://cdn.plot.ly/plotly-3.0.0.min.js" charset="utf-8"></script>
     <style>
         body {
@@ -39,11 +38,22 @@
             background-color: #f8f9fa;
             border-radius: 4px;
         }
+        .type-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .type-stat {
+            padding: 10px;
+            border-radius: 4px;
+            background-color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Message Count Visualization</h1>
+        <h1>Message Count by Type</h1>
         
         <div class="controls">
             <label for="timeRange">Select Time Range:</label>
@@ -58,30 +68,44 @@
     </div>
 
     <script>
+        // Color palette for different message types
+        const colorPalette = {
+            '': '#1f77b4',
+            'neighborinfo': '#2ca02c',
+            'nodeinfo': '#ff7f0e',
+            'position': '#d62728',
+            'telemetry': '#9467bd',
+            'text': '#8c564b',
+            'traceroute': '#e377c2',
+            'waypoint': '#82001F'
+
+        };
+
         async function loadData() {
             const days = document.getElementById('timeRange').value;
-            const filename = `data/hourly_messages_${days}d.json`;
+            const filename = `data/hourly_messages_by_type_${days}d.json`;
             
             try {
                 const response = await fetch(filename);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const data = await response.json();
+                const jsonData = await response.json();
                 
-                // Create the bar plot
-                const trace = {
-                    x: data.x,
-                    y: data.y,
+                // Create traces for each message type
+                const traces = jsonData.types.map(type => ({
+                    name: type,
+                    x: jsonData.x,
+                    y: jsonData.data[type],
                     type: 'bar',
+                    stackgroup: 'one',
                     marker: {
-                        color: '#1f77b4',
-                        opacity: 0.8
+                        color: colorPalette[type] || colorPalette['default']
                     }
-                };
+                }));
 
                 const layout = {
-                    title: `Message Count by Hour (Past ${days} ${days == 1 ? 'Day' : 'Days'})`,
+                    title: `Message Count by Type (Past ${days} ${days == 1 ? 'Day' : 'Days'})`,
                     xaxis: {
                         title: 'Time',
                         tickangle: -45
@@ -89,19 +113,35 @@
                     yaxis: {
                         title: 'Number of Messages'
                     },
-                    bargap: 0.05,
-                    height: 600
+                    barmode: 'stack',
+                    height: 600,
+                    showlegend: true,
+                    legend: {
+                        orientation: 'h',
+                        y: -0.2
+                    }
                 };
 
-                Plotly.newPlot('plot', [trace], layout);
+                Plotly.newPlot('plot', traces, layout);
 
                 // Update metadata display
-                const metadata = data.metadata;
+                const metadata = jsonData.metadata;
+                const typeStats = jsonData.types.map(type => `
+                    <div class="type-stat" style="border-left: 4px solid ${colorPalette[type] || colorPalette['default']}">
+                        <strong>${type}</strong><br>
+                        Count: ${metadata.messages_by_type[type].toLocaleString()}<br>
+                        Percentage: ${metadata.messages_by_type[type + '_percentage'].toFixed(1)}%
+                    </div>
+                `).join('');
+
                 document.getElementById('metadata').innerHTML = `
                     <h3>Summary Statistics</h3>
                     <p>Total Messages: ${metadata.total_messages.toLocaleString()}</p>
-                    <p>Average Messages per Hour: ${metadata.average_messages_per_hour.toFixed(1)}</p>
                     <p>Generated at: ${new Date(metadata.generated_at).toLocaleString()}</p>
+                    <h4>Message Types</h4>
+                    <div class="type-stats">
+                        ${typeStats}
+                    </div>
                 `;
             } catch (error) {
                 console.error('Error loading data:', error);

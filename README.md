@@ -12,6 +12,8 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
 
 ![screenshot](obrazki/obrazek-README.png)
 
+![message counts](obrazki/obrazek-README-5.png)
+
 # Quick start
 
 1. Copy `config.json.txt` to `config.json` and change according to your needs
@@ -54,7 +56,7 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
 - Supports time-window-based filtering for flexible data analysis.
 - Generates separate JSON files for physical senders and logical senders.
 
-### 3. Visualization (`index.html`)
+### 3a. Visualization (`index.html`)
 - To be put on a webserver
 - An interactive web interface to visualize mesh network connections using Cytoscape.js.
 - Three modes of visualization:
@@ -63,6 +65,10 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
   - **Physical sender** - showing `sender` and `to` of messages passed through the network *(prototype)*
   - **Neighbors** - showing connections reported by nodes as `neighbors` *(early prototype)*
 - Three layouts: Cose-Bilkent, Circle, and Concentric
+
+### 3b. Visualization (`counts.html`)
+
+- statistics for the messages collected in past 1 and 7 days.
 
 ### 4. Auxiliary script to dump and copy data (`cron-task.sh`)
 - to be run from cron
