@@ -338,6 +338,101 @@ def export_hourly_messages(db_path, days=1):
         if conn:
             conn.close()
 
+
+def export_hourly_unique_senders(db_path, days=1):
+    """
+    Export the number of unique senders and physical senders in each hour for the past N days.
+    
+    Parameters:
+    db_path (str): Path to the SQLite database
+    days (int): Number of days to look back (default: 1)
+    """
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        # Calculate the cutoff timestamp
+        cutoff_time = int((datetime.now() - timedelta(days=days)).timestamp())
+        current_time = int(datetime.now().timestamp())
+        
+        # Query to get unique sender counts by hour
+        cursor.execute("""
+            SELECT 
+                strftime('%Y-%m-%d %H:00:00', datetime(timestamp, 'unixepoch', 'localtime')) as hour,
+                COUNT(DISTINCT sender) as unique_senders,
+                COUNT(DISTINCT physical_sender) as unique_physical_senders
+            FROM messages 
+            WHERE timestamp >= ? AND timestamp <= ?
+            GROUP BY hour
+            ORDER BY hour
+        """, (cutoff_time, current_time))
+        
+        rows = cursor.fetchall()
+        
+        # Process data into format suitable for Plotly
+        plotly_data = {
+            "x": [],  # hours
+            "unique_senders": [],
+            "unique_physical_senders": [],
+            "metadata": {
+                "days": days,
+                "generated_at": datetime.now().isoformat(),
+                "total_unique_senders": 0,
+                "total_unique_physical_senders": 0,
+                "average_unique_senders_per_hour": 0,
+                "average_unique_physical_senders_per_hour": 0
+            }
+        }
+        
+        total_unique_senders = 0
+        total_unique_physical_senders = 0
+        hour_count = 0
+        
+        for row in rows:
+            hour_str, unique_senders, unique_physical_senders = row
+            plotly_data["x"].append(hour_str)
+            plotly_data["unique_senders"].append(unique_senders)
+            plotly_data["unique_physical_senders"].append(unique_physical_senders)
+            
+            total_unique_senders += unique_senders
+            total_unique_physical_senders += unique_physical_senders
+            hour_count += 1
+        
+        # Calculate averages
+        if hour_count > 0:
+            plotly_data["metadata"]["average_unique_senders_per_hour"] = total_unique_senders / hour_count
+            plotly_data["metadata"]["average_unique_physical_senders_per_hour"] = total_unique_physical_senders / hour_count
+        
+        # Get total unique senders across all hours
+        cursor.execute("""
+            SELECT 
+                COUNT(DISTINCT sender) as total_unique_senders,
+                COUNT(DISTINCT physical_sender) as total_unique_physical_senders
+            FROM messages 
+            WHERE timestamp >= ? AND timestamp <= ?
+        """, (cutoff_time, current_time))
+        
+        total_row = cursor.fetchone()
+        if total_row:
+            plotly_data["metadata"]["total_unique_senders"] = total_row[0]
+            plotly_data["metadata"]["total_unique_physical_senders"] = total_row[1]
+            
+        # Save to JSON file
+        output_path = f"{data}/hourly_unique_senders_{days}d.json"
+        with open(output_path, "w") as f:
+            json.dump(plotly_data, f, indent=2)
+            
+        print(f"Hourly unique senders data exported to {output_path}")
+        
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        if conn:
+            conn.close()
+
+
 if __name__ == "__main__":
     db_path = "mqtt_messages.db"
     time_windows = [15, 30, 60, 3 * 60, 24 * 60]
@@ -369,5 +464,6 @@ if __name__ == "__main__":
         export_traceroutes_to_json(db_path, traceroutes_json, minutes) 
 
     print("\nGenerating message count plots...")
-    export_hourly_messages(db_path, days=1)  # 1-day plot
-    export_hourly_messages(db_path, days=7)  # 7-day plot
+    for days in [1, 7, 14]:
+        export_hourly_messages(db_path, days=days)
+        export_hourly_unique_senders(db_path, days=days)
