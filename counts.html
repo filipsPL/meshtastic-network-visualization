@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Statistics Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-3.0.0.min.js" charset="utf-8"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        #metadata, #senders-metadata {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .type-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .type-stat {
+            padding: 10px;
+            border-radius: 4px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="timeRange">Select Time Range:</label>
+        <select id="timeRange" onchange="loadAllData()">
+            <option value="1">Last 24 Hours</option>
+            <option value="7">Last 7 Days</option>
+            <option value="14">Last 14 Days</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <h1>Message Count by Type</h1>
+        <div id="plot"></div>
+        <div id="metadata"></div>
+    </div>
+
+    <div class="container">
+        <h1>Unique Senders Over Time</h1>
+        <div id="senders-plot"></div>
+        <div id="senders-metadata"></div>
+    </div>
+
+    <script>
+        // Color palette for different message types
+        const colorPalette = {
+            '': '#bbbbbb',
+            'neighborinfo': '#2ca02c',
+            'nodeinfo': '#ff7f0e',
+            'position': '#d62728',
+            'telemetry': '#9467bd',
+            'text': '#8c564b',
+            'traceroute': '#e377c2',
+            'waypoint': '#82001F'
+        };
+
+        async function loadMessageData(days) {
+            const filename = `data/hourly_messages_by_type_${days}d.json`;
+            
+            try {
+                const response = await fetch(filename);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const jsonData = await response.json();
+                
+                // Create traces for each message type
+                const traces = jsonData.types.map(type => ({
+                    name: type,
+                    x: jsonData.x,
+                    y: jsonData.data[type],
+                    type: 'bar',
+                    stackgroup: 'one',
+                    marker: {
+                        color: colorPalette[type] || colorPalette['default']
+                    }
+                }));
+
+                const layout = {
+                    title: `Message Count by Type (Past ${days} ${days == 1 ? 'Day' : 'Days'})`,
+                    xaxis: {
+                        title: 'Time',
+                        tickangle: -45
+                    },
+                    yaxis: {
+                        title: 'Number of Messages'
+                    },
+                    barmode: 'stack',
+                    height: 600,
+                    showlegend: true,
+                    legend: {
+                        orientation: 'h',
+                        y: -0.2
+                    }
+                };
+
+                Plotly.newPlot('plot', traces, layout);
+
+                // Update metadata display
+                const metadata = jsonData.metadata;
+                const typeStats = jsonData.types.map(type => `
+                    <div class="type-stat" style="border-left: 4px solid ${colorPalette[type] || colorPalette['default']}">
+                        <strong>${type}</strong><br>
+                        Count: ${metadata.messages_by_type[type].toLocaleString()}<br>
+                        Percentage: ${metadata.messages_by_type[type + '_percentage'].toFixed(1)}%
+                    </div>
+                `).join('');
+
+                document.getElementById('metadata').innerHTML = `
+                    <h3>Summary Statistics</h3>
+                    <p>Total Messages: ${metadata.total_messages.toLocaleString()}</p>
+                    <p>Generated at: ${new Date(metadata.generated_at).toLocaleString()}</p>
+                    <h4>Message Types</h4>
+                    <div class="type-stats">
+                        ${typeStats}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading message data:', error);
+                document.getElementById('plot').innerHTML = `
+                    <p style="color: red">Error loading message data. Please check if the file exists and try again.</p>
+                `;
+                document.getElementById('metadata').innerHTML = '';
+            }
+        }
+
+        async function loadSendersData(days) {
+            const filename = `data/hourly_unique_senders_${days}d.json`;
+            
+            try {
+                const response = await fetch(filename);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const jsonData = await response.json();
+                
+                // Create traces for unique senders
+                const traces = [
+                    {
+                        name: 'Unique Senders',
+                        x: jsonData.x,
+                        y: jsonData.unique_senders,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        line: { color: '#1f77b4' }
+                    },
+                    {
+                        name: 'Unique Physical Senders',
+                        x: jsonData.x,
+                        y: jsonData.unique_physical_senders,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        line: { color: '#2ca02c' }
+                    }
+                ];
+
+                const layout = {
+                    title: `Unique Senders Over Time (Past ${days} ${days == 1 ? 'Day' : 'Days'})`,
+                    xaxis: {
+                        title: 'Time',
+                        tickangle: -45
+                    },
+                    yaxis: {
+                        title: 'Number of Unique Senders'
+                    },
+                    height: 600,
+                    showlegend: true,
+                    legend: {
+                        orientation: 'h',
+                        y: -0.2
+                    }
+                };
+
+                Plotly.newPlot('senders-plot', traces, layout);
+
+                // Update metadata display
+                const metadata = jsonData.metadata;
+                document.getElementById('senders-metadata').innerHTML = `
+                    <h3>Summary Statistics</h3>
+                    <p>Total Unique Senders: ${metadata.total_unique_senders.toLocaleString()}</p>
+                    <p>Total Unique Physical Senders: ${metadata.total_unique_physical_senders.toLocaleString()}</p>
+                    <p>Average Unique Senders per Hour: ${metadata.average_unique_senders_per_hour.toFixed(1)}</p>
+                    <p>Average Unique Physical Senders per Hour: ${metadata.average_unique_physical_senders_per_hour.toFixed(1)}</p>
+                    <p>Generated at: ${new Date(metadata.generated_at).toLocaleString()}</p>
+                `;
+            } catch (error) {
+                console.error('Error loading senders data:', error);
+                document.getElementById('senders-plot').innerHTML = `
+                    <p style="color: red">Error loading senders data. Please check if the file exists and try again.</p>
+                `;
+                document.getElementById('senders-metadata').innerHTML = '';
+            }
+        }
+
+        async function loadAllData() {
+            const days = document.getElementById('timeRange').value;
+            await Promise.all([
+                loadMessageData(days),
+                loadSendersData(days)
+            ]);
+        }
+
+        // Load initial data when page loads
+        document.addEventListener('DOMContentLoaded', loadAllData);
+    </script>
+</body>
+</html>

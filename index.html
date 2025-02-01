@@ -31,7 +31,8 @@
 </head>
 
 <body>
-    <strong>Map of mesh node connections.</strong> Updated: <span id="whenupdated"></span>
+    <strong>Map of mesh node connections.</strong> Updated: <span id="whenupdated"></span> <a href="counts.html">💬 Message stats</a>
+    | <a href="https://github.com/filipsPL/meshtastic-network-visualization/">GitHub</a>
     <div class="controls">
         <select id="fileSelect">
             <option value="data/cytoscape_traceroutes_1h.json">🚇  Traceroutes :: 1 hour</option>
@@ -50,12 +51,20 @@
             <option value="data/cytoscape_neighbors_3h.json">🔗 Neighbors :: 3 hours</option>
             <option value="data/cytoscape_neighbors_24h.json">🔗 Neighbors :: 24 hours</option>
         </select>
+        
+        <select id="layoutSelect">
+            <option value="cose-bilkent">Cose-Bilkent Layout</option>
+            <option value="circle">Circle Layout</option>
+            <option value="concentric">Concentric Layout</option>
+        </select>
     </div>
     <div id="cy"></div>
     <script>
         let cy; // Define cy in global scope
+        let currentFilename; // Store the current filename
 
         function loadData(filename) {
+            currentFilename = filename; // Store the current filename
             fetch(filename)
                 .then(response => {
                     if (!response.ok) {
@@ -95,6 +104,42 @@
                         cy.destroy();
                     }
 
+                    // Determine layout based on dropdown selection
+                    const layoutType = document.getElementById('layoutSelect').value;
+                    let layoutConfig;
+                    switch(layoutType) {
+                        case 'cose-bilkent':
+                            layoutConfig = {
+                                name: "cose-bilkent",
+                                animate: false,
+                                idealEdgeLength: 100,
+                                randomize: true,
+                                nodeRepulsion: 7000,
+                                edgeElasticity: 0.45,
+                                nestingFactor: 10.1,
+                                numIter: 30000,
+                                gravity: 0.25,
+                                tile: true
+                            };
+                            break;
+                        case 'concentric':
+                            layoutConfig = {
+                                name: 'concentric',
+                                minNodeSpacing: 50,
+                                concentric: function(node) {
+                                    return node.data('connections');
+                                },
+                                levelWidth: function() {
+                                    return 2;
+                                }
+                            };
+                            break;
+                        default:
+                            layoutConfig = {
+                                name: 'circle'
+                            };
+                    }
+
                     // Initialize Cytoscape.js
                     cy = cytoscape({
                         container: document.getElementById('cy'),
@@ -114,9 +159,7 @@
                                     'background-color': 'mapData(connections, 1, 10, #d2dbfa, #003aff)',
                                     'shape': 'round-rectangle'
                                 }
-
                             },
-
                             {
                                 selector: 'node[role=2]',
                                 style: {
@@ -144,7 +187,6 @@
                                     'content': (ele) => `[RPT] ${ele.data('label')}`
                                 }
                             },
-
                             {
                                 selector: 'edge',
                                 style: {
@@ -159,18 +201,7 @@
                                 }
                             }
                         ],
-                        layout: {
-                            name: "cose-bilkent",
-                            animate: false,
-                            idealEdgeLength: 100,
-                            randomize: true,
-                            nodeRepulsion: 7000,
-                            edgeElasticity: 0.45,
-                            nestingFactor: 10.1,
-                            numIter: 30000,
-                            gravity: 0.25,
-                            tile: true
-                        }
+                        layout: layoutConfig
                     });
                 })
                 .catch(error => {
@@ -193,9 +224,17 @@
                 });
         }
 
-        // Add event listener for dropdown changes
+        // Add event listener for data file dropdown changes
         document.getElementById('fileSelect').addEventListener('change', function () {
             loadData(this.value);
+        });
+
+        // Add event listener for layout dropdown changes
+        document.getElementById('layoutSelect').addEventListener('change', function () {
+            // Reload the current data with the new layout
+            if (currentFilename) {
+                loadData(currentFilename);
+            }
         });
 
         // Load initial data

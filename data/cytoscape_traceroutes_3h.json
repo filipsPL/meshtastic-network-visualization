@@ -1,432 +1,68 @@
 [
   {
     "data": {
-      "id": "1312",
-      "label": "1312",
+      "id": "KRN2",
+      "label": "KRN2",
       "role": 0,
       "connections": 2,
-      "original_name": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 Warszawa-\u0000\u0000oliborz"
+      "original_name": "Korniszon2"
     }
   },
   {
     "data": {
-      "id": "DM02",
-      "label": "DM02",
-      "role": 2,
-      "connections": 2,
-      "original_name": "Doman [DM02|test|868]"
-    }
-  },
-  {
-    "data": {
-      "id": "CM",
-      "label": "CM",
-      "role": 0,
-      "connections": 10,
-      "original_name": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3",
-      "label": "9cd3",
-      "role": 0,
-      "connections": 7,
-      "original_name": "Dawidy Bankowe PK 9cd3"
-    }
-  },
-  {
-    "data": {
-      "id": "DM01",
-      "label": "DM01",
+      "id": "6e7f",
+      "label": "6e7f",
       "role": 0,
       "connections": 2,
-      "original_name": "Doman [DM01|mobile|868]"
+      "original_name": "PLmesh.org 6e7f"
     }
   },
   {
     "data": {
-      "id": "DM11",
-      "label": "DM11",
-      "role": 0,
-      "connections": 2,
-      "original_name": "Doman.MESH [DM11|base|868]"
-    }
-  },
-  {
-    "data": {
-      "id": "PS1",
-      "label": "PS1",
-      "role": 0,
-      "connections": 2,
-      "original_name": "PS5PS 1"
-    }
-  },
-  {
-    "data": {
-      "id": "YW",
-      "label": "YW",
-      "role": 1,
-      "connections": 2,
-      "original_name": "Yucca WawaSrod"
-    }
-  },
-  {
-    "data": {
-      "id": "KRNS",
-      "label": "KRNS",
-      "role": 0,
-      "connections": 4,
-      "original_name": "Korniszon"
-    }
-  },
-  {
-    "data": {
-      "id": "LM03",
-      "label": "LM03",
+      "id": "flp3",
+      "label": "flp3",
       "role": 0,
       "connections": 1,
-      "original_name": "LiligoLm"
+      "original_name": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
     "data": {
-      "id": "5go",
-      "label": "5go",
-      "role": 0,
-      "connections": 4,
-      "original_name": "SP5GO gotoxy dach"
-    }
-  },
-  {
-    "data": {
-      "id": "KMT",
-      "label": "KMT",
+      "id": "flp2",
+      "label": "flp2",
       "role": 0,
       "connections": 1,
-      "original_name": "Komin|Turow"
+      "original_name": "filips-02 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
     "data": {
-      "id": "LM02",
-      "label": "LM02",
-      "role": 0,
-      "connections": 1,
-      "original_name": "LepianRack\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "0310",
-      "label": "0310",
-      "role": 0,
-      "connections": 2,
-      "original_name": "Meshtastic 0310"
-    }
-  },
-  {
-    "data": {
-      "id": "8250",
-      "label": "8250",
-      "role": 0,
-      "connections": 2,
-      "original_name": "Meshtastic 8250"
-    }
-  },
-  {
-    "data": {
-      "id": "161",
-      "label": "161",
-      "role": 0,
-      "connections": 1,
-      "original_name": "161\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "GT01",
-      "label": "GT01",
-      "role": 0,
-      "connections": 2,
-      "original_name": "W lutym: przejdznamediumfast.pl"
-    }
-  },
-  {
-    "data": {
-      "id": "SSG1",
-      "label": "SSG1",
-      "role": 1,
-      "connections": 1,
-      "original_name": "Wbijaj \u0000\u0000\u0000\u0000 https://tinyurl.com/wa-node"
-    }
-  },
-  {
-    "data": {
-      "id": "nvvm",
-      "label": "nvvm",
-      "role": 0,
-      "connections": 1,
-      "original_name": "nevvman 7008 (SP5FRA)"
-    }
-  },
-  {
-    "data": {
-      "id": "flp5",
-      "label": "flp5",
-      "role": 0,
-      "connections": 1,
-      "original_name": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "1312_DM02",
-      "source": "1312",
-      "target": "DM02",
-      "count": 1,
-      "original_source": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 Warszawa-\u0000\u0000oliborz",
-      "original_target": "Doman [DM02|test|868]"
-    }
-  },
-  {
-    "data": {
-      "id": "CM_9cd3",
-      "source": "CM",
-      "target": "9cd3",
+      "id": "KRN2_6e7f",
+      "source": "KRN2",
+      "target": "6e7f",
       "count": 2,
-      "original_source": "Cichy Mesh",
-      "original_target": "Dawidy Bankowe PK 9cd3"
+      "original_source": "Korniszon2",
+      "original_target": "PLmesh.org 6e7f"
     }
   },
   {
     "data": {
-      "id": "CM_DM01",
-      "source": "CM",
-      "target": "DM01",
-      "count": 1,
-      "original_source": "Cichy Mesh",
-      "original_target": "Doman [DM01|mobile|868]"
-    }
-  },
-  {
-    "data": {
-      "id": "CM_DM02",
-      "source": "CM",
-      "target": "DM02",
+      "id": "6e7f_flp3",
+      "source": "6e7f",
+      "target": "flp3",
       "count": 2,
-      "original_source": "Cichy Mesh",
-      "original_target": "Doman [DM02|test|868]"
+      "original_source": "PLmesh.org 6e7f",
+      "original_target": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
     "data": {
-      "id": "CM_DM11",
-      "source": "CM",
-      "target": "DM11",
-      "count": 1,
-      "original_source": "Cichy Mesh",
-      "original_target": "Doman.MESH [DM11|base|868]"
-    }
-  },
-  {
-    "data": {
-      "id": "CM_PS1",
-      "source": "CM",
-      "target": "PS1",
-      "count": 3,
-      "original_source": "Cichy Mesh",
-      "original_target": "PS5PS 1"
-    }
-  },
-  {
-    "data": {
-      "id": "CM_YW",
-      "source": "CM",
-      "target": "YW",
+      "id": "flp2_KRN2",
+      "source": "flp2",
+      "target": "KRN2",
       "count": 2,
-      "original_source": "Cichy Mesh",
-      "original_target": "Yucca WawaSrod"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_CM",
-      "source": "9cd3",
-      "target": "CM",
-      "count": 2,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_KRNS",
-      "source": "9cd3",
-      "target": "KRNS",
-      "count": 2,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "Korniszon"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_LM03",
-      "source": "9cd3",
-      "target": "LM03",
-      "count": 2,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "LiligoLm"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_5go",
-      "source": "9cd3",
-      "target": "5go",
-      "count": 2,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "SP5GO gotoxy dach"
-    }
-  },
-  {
-    "data": {
-      "id": "DM11_DM01",
-      "source": "DM11",
-      "target": "DM01",
-      "count": 1,
-      "original_source": "Doman.MESH [DM11|base|868]",
-      "original_target": "Doman [DM01|mobile|868]"
-    }
-  },
-  {
-    "data": {
-      "id": "KMT_CM",
-      "source": "KMT",
-      "target": "CM",
-      "count": 3,
-      "original_source": "Komin|Turow",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "KRNS_CM",
-      "source": "KRNS",
-      "target": "CM",
-      "count": 7,
-      "original_source": "Korniszon",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "KRNS_9cd3",
-      "source": "KRNS",
-      "target": "9cd3",
-      "count": 2,
-      "original_source": "Korniszon",
-      "original_target": "Dawidy Bankowe PK 9cd3"
-    }
-  },
-  {
-    "data": {
-      "id": "LM02_1312",
-      "source": "LM02",
-      "target": "1312",
-      "count": 3,
-      "original_source": "LepianRack\u0000\u0000\u0000\u0000",
-      "original_target": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 Warszawa-\u0000\u0000oliborz"
-    }
-  },
-  {
-    "data": {
-      "id": "0310_5go",
-      "source": "0310",
-      "target": "5go",
-      "count": 2,
-      "original_source": "Meshtastic 0310",
-      "original_target": "SP5GO gotoxy dach"
-    }
-  },
-  {
-    "data": {
-      "id": "8250_0310",
-      "source": "8250",
-      "target": "0310",
-      "count": 2,
-      "original_source": "Meshtastic 8250",
-      "original_target": "Meshtastic 0310"
-    }
-  },
-  {
-    "data": {
-      "id": "PS1_161",
-      "source": "PS1",
-      "target": "161",
-      "count": 1,
-      "original_source": "PS5PS 1",
-      "original_target": "161\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "5go_9cd3",
-      "source": "5go",
-      "target": "9cd3",
-      "count": 4,
-      "original_source": "SP5GO gotoxy dach",
-      "original_target": "Dawidy Bankowe PK 9cd3"
-    }
-  },
-  {
-    "data": {
-      "id": "GT01_8250",
-      "source": "GT01",
-      "target": "8250",
-      "count": 2,
-      "original_source": "W lutym: przejdznamediumfast.pl",
-      "original_target": "Meshtastic 8250"
-    }
-  },
-  {
-    "data": {
-      "id": "GT01_5go",
-      "source": "GT01",
-      "target": "5go",
-      "count": 2,
-      "original_source": "W lutym: przejdznamediumfast.pl",
-      "original_target": "SP5GO gotoxy dach"
-    }
-  },
-  {
-    "data": {
-      "id": "SSG1_KRNS",
-      "source": "SSG1",
-      "target": "KRNS",
-      "count": 7,
-      "original_source": "Wbijaj \u0000\u0000\u0000\u0000 https://tinyurl.com/wa-node",
-      "original_target": "Korniszon"
-    }
-  },
-  {
-    "data": {
-      "id": "YW_CM",
-      "source": "YW",
-      "target": "CM",
-      "count": 2,
-      "original_source": "Yucca WawaSrod",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "nvvm_flp5",
-      "source": "nvvm",
-      "target": "flp5",
-      "count": 2,
-      "original_source": "nevvman 7008 (SP5FRA)",
-      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "original_source": "filips-02 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "Korniszon2"
     }
   }
 ]

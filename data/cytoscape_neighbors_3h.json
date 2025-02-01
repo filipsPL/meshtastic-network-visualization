@@ -1,10 +1,10 @@
 [
   {
     "data": {
-      "id": "!da5acdf4",
-      "label": "flp3",
+      "id": "!b03bbe9c",
+      "label": "flp5",
       "role": 0,
-      "connections": 4
+      "connections": 6
     }
   },
   {
@@ -20,13 +20,13 @@
       "id": "!4eee6e7f",
       "label": "6e7f",
       "role": 0,
-      "connections": 1
+      "connections": 2
     }
   },
   {
     "data": {
-      "id": "!b03bbe9c",
-      "label": "flp5",
+      "id": "!95c62fd4",
+      "label": "KRN2",
       "role": 0,
       "connections": 1
     }
@@ -36,17 +36,135 @@
       "id": "!da5687b0",
       "label": "!da5687b0",
       "role": null,
+      "connections": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4",
+      "label": "flp3",
+      "role": 0,
+      "connections": 4
+    }
+  },
+  {
+    "data": {
+      "id": "!b03da090",
+      "label": "flp4",
+      "role": 0,
+      "connections": 4
+    }
+  },
+  {
+    "data": {
+      "id": "!433c48d0",
+      "label": "STRr",
+      "role": 2,
+      "connections": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!c0c31be8",
+      "label": "flp2",
+      "role": 0,
+      "connections": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!da5aced8",
+      "label": "flp1",
+      "role": 0,
+      "connections": 5
+    }
+  },
+  {
+    "data": {
+      "id": "!1b944f98",
+      "label": "AmdM",
+      "role": 0,
       "connections": 1
     }
   },
   {
     "data": {
-      "id": "!da5acdf4_!2f9f7008",
-      "source": "!da5acdf4",
+      "id": "!b03bbe9c_!2f9f7008",
+      "source": "!b03bbe9c",
       "target": "!2f9f7008",
+      "snr": 0.0,
+      "weight": 1,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!b03bbe9c_!4eee6e7f",
+      "source": "!b03bbe9c",
+      "target": "!4eee6e7f",
+      "snr": -14.0,
+      "weight": 1,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!b03bbe9c_!95c62fd4",
+      "source": "!b03bbe9c",
+      "target": "!95c62fd4",
+      "snr": -18.0,
+      "weight": 1,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!b03bbe9c_!da5687b0",
+      "source": "!b03bbe9c",
+      "target": "!da5687b0",
+      "snr": 0.0,
+      "weight": 1,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!b03bbe9c_!da5acdf4",
+      "source": "!b03bbe9c",
+      "target": "!da5acdf4",
+      "snr": 6.0,
+      "weight": 2,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!b03da090_!433c48d0",
+      "source": "!b03da090",
+      "target": "!433c48d0",
+      "snr": -6.0,
+      "weight": 1,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!b03da090_!c0c31be8",
+      "source": "!b03da090",
+      "target": "!c0c31be8",
       "snr": -1.0,
       "weight": 1,
-      "appearance_count": 53
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!b03da090_!da5aced8",
+      "source": "!b03da090",
+      "target": "!da5aced8",
+      "snr": 6.0,
+      "weight": 2,
+      "appearance_count": 1
     }
   },
   {
@@ -54,9 +172,9 @@
       "id": "!da5acdf4_!4eee6e7f",
       "source": "!da5acdf4",
       "target": "!4eee6e7f",
-      "snr": -13.0,
+      "snr": -10.0,
       "weight": 1,
-      "appearance_count": 31
+      "appearance_count": 58
     }
   },
   {
@@ -66,7 +184,7 @@
       "target": "!b03bbe9c",
       "snr": 10.0,
       "weight": 2,
-      "appearance_count": 174
+      "appearance_count": 216
     }
   },
   {
@@ -74,9 +192,49 @@
       "id": "!da5acdf4_!da5687b0",
       "source": "!da5acdf4",
       "target": "!da5687b0",
-      "snr": 3.0,
+      "snr": 2.0,
       "weight": 2,
-      "appearance_count": 22
+      "appearance_count": 16
+    }
+  },
+  {
+    "data": {
+      "id": "!da5aced8_!1b944f98",
+      "source": "!da5aced8",
+      "target": "!1b944f98",
+      "snr": -3.0,
+      "weight": 1,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5aced8_!433c48d0",
+      "source": "!da5aced8",
+      "target": "!433c48d0",
+      "snr": -18.0,
+      "weight": 1,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5aced8_!b03da090",
+      "source": "!da5aced8",
+      "target": "!b03da090",
+      "snr": 11.0,
+      "weight": 2,
+      "appearance_count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5aced8_!c0c31be8",
+      "source": "!da5aced8",
+      "target": "!c0c31be8",
+      "snr": -3.0,
+      "weight": 1,
+      "appearance_count": 1
     }
   }
 ]
