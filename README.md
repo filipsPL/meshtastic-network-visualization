@@ -129,11 +129,11 @@ Open `index.html` in a web browser (you may need to run it in a web server to ac
 ### Modes
 
 
-| Message flow                                | Node interactions (beta stage)            | Neighbours (alpha stage)                  |
-| ------------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| ![alt text](obrazki/obrazek-README-1.png)   | ![alt text](obrazki/obrazek-README-2.png) | ![alt text](obrazki/obrazek-README-3.png) |
-| Traceroute                                  |                                           |                                           |
-| ![traceroute](obrazki/obrazek-README-4.png) |                                           |                                           |
+| Message flow                                | Node interactions                          | Neighbours                                      |
+| ------------------------------------------- | ------------------------------------------ | ----------------------------------------------- |
+| ![alt text](obrazki/obrazek-README-1.png)   | ![alt text](obrazki/obrazek-README-2.png)  | ![sąsiedzi](obrazki/obrazek-README-6.png)       |
+| Traceroute                                  | Message histogram                          | Unique nodes seen                               |
+| ![traceroute](obrazki/obrazek-README-4.png) | ![histogram](obrazki/obrazek-README-7.png) | ![unique senders](obrazki/obrazek-README-8.png) |
 
 
 
