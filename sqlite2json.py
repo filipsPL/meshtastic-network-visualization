@@ -27,7 +27,7 @@ def export_neighbors_to_json(db_path, json_output_path, time_limit_minutes):
         cutoff_time = int((datetime.now() - timedelta(minutes=time_limit_minutes)).timestamp())
 
         cursor.execute(
-            """SELECT node_id, neighbor_id, snr, COUNT(*) as appearance_count
+            """SELECT node_id, neighbor_id, snr, COUNT(*) as count
                FROM neighbors
                WHERE timestamp >= ?
                GROUP BY node_id, neighbor_id""",
@@ -39,12 +39,12 @@ def export_neighbors_to_json(db_path, json_output_path, time_limit_minutes):
         valid_connections = []
 
         for row in rows:
-            node_id, neighbor_id, snr, appearance_count = row
+            node_id, neighbor_id, snr, count = row
 
             if node_id < 2 or neighbor_id < 2 or node_id > 4294967294 or neighbor_id > 4294967294:
                 continue
 
-            valid_connections.append((node_id, neighbor_id, snr, appearance_count))
+            valid_connections.append((node_id, neighbor_id, snr, count))
 
             connection_counts[node_id] += 1
             connection_counts[neighbor_id] += 1
@@ -61,7 +61,7 @@ def export_neighbors_to_json(db_path, json_output_path, time_limit_minutes):
             cytoscape_data.append({"data": {"id": node_hex, "label": node_label, "role": node_role, "connections": connections}})
             processed_nodes.add(node_hex)
 
-        for node_id, neighbor_id, snr, appearance_count in valid_connections:
+        for node_id, neighbor_id, snr, count in valid_connections:
             node_hex = f"!{node_id:x}"
             neighbor_hex = f"!{neighbor_id:x}"
 
@@ -73,7 +73,7 @@ def export_neighbors_to_json(db_path, json_output_path, time_limit_minutes):
                         "target": neighbor_hex,
                         "snr": snr,
                         "weight": 2 if snr > 0 else 1,
-                        "appearance_count": appearance_count,
+                        "count": count,
                     }
                 }
             )
