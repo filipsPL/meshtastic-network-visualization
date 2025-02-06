@@ -56,6 +56,8 @@ def export_neighbors_to_json(db_path, json_output_path, time_limit_minutes):
             node_hex = f"!{node_id:x}"
             node_label, node_role = get_node_info(cursor, node_id)
 
+            node_label = node_label if node_label else node_hex
+
             cytoscape_data.append({"data": {"id": node_hex, "label": node_label, "role": node_role, "connections": connections}})
             processed_nodes.add(node_hex)
 
@@ -130,6 +132,8 @@ def export_to_json(db_path, json_output_path, time_limit_minutes, use_physical_s
         for node_id, connections in connection_counts.items():
             node_hex = f"!{node_id:x}"
             node_label, node_role = get_node_info(cursor, node_id)
+
+            node_label = node_label if node_label else node_hex
 
             cytoscape_data.append({"data": {"id": node_hex, "label": node_label, "role": node_role, "connections": connections}})
             processed_nodes.add(node_hex)
@@ -206,11 +210,13 @@ def export_traceroutes_to_json(db_path, json_output_path, time_limit_minutes):
             if node_name not in processed_nodes:
                 shortname, role = get_node_shortname_and_role(cursor, node_name)
                 node_id = shortname  # Use shortname as node ID
+
+                label = shortname if shortname else node_name
                 
                 cytoscape_data.append({
                     "data": {
                         "id": node_id,
-                        "label": shortname,
+                        "label": label,
                         "role": role,
                         "connections": connection_counts[node_name],
                         "original_name": node_name
