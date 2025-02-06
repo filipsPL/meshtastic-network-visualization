@@ -33,7 +33,7 @@
             border-radius: 4px;
             margin-right: 10px;
         }
-        #metadata, #senders-metadata {
+        #metadata, #senders-metadata, #pie-metadata {
             margin-top: 20px;
             padding: 15px;
             background-color: #f8f9fa;
@@ -66,6 +66,11 @@
         <h1>Message Count by Type</h1>
         <div id="plot"></div>
         <div id="metadata"></div>
+    </div>
+
+    <div class="container">
+        <h1>Message Types Distribution</h1>
+        <div id="pie-plot"></div>
     </div>
 
     <div class="container">
@@ -129,7 +134,29 @@
 
                 Plotly.newPlot('plot', traces, layout);
 
-                // Update metadata display
+                // Create pie chart data
+                const pieData = [{
+                    values: jsonData.types.map(type => jsonData.metadata.messages_by_type[type]),
+                    labels: jsonData.types,
+                    type: 'pie',
+                    marker: {
+                        colors: jsonData.types.map(type => colorPalette[type] || colorPalette['default'])
+                    }
+                }];
+
+                const pieLayout = {
+                    title: `Message Type Distribution (Past ${days} ${days == 1 ? 'Day' : 'Days'})`,
+                    height: 600,
+                    showlegend: true,
+                    legend: {
+                        orientation: 'h',
+                        y: -0.2
+                    }
+                };
+
+                Plotly.newPlot('pie-plot', pieData, pieLayout);
+
+                // Update metadata displays
                 const metadata = jsonData.metadata;
                 const typeStats = jsonData.types.map(type => `
                     <div class="type-stat" style="border-left: 4px solid ${colorPalette[type] || colorPalette['default']}">
@@ -139,7 +166,7 @@
                     </div>
                 `).join('');
 
-                document.getElementById('metadata').innerHTML = `
+                const metadataHTML = `
                     <h3>Summary Statistics</h3>
                     <p>Total Messages: ${metadata.total_messages.toLocaleString()}</p>
                     <p>Generated at: ${new Date(metadata.generated_at).toLocaleString()}</p>
@@ -148,12 +175,17 @@
                         ${typeStats}
                     </div>
                 `;
+
+                document.getElementById('metadata').innerHTML = metadataHTML;
             } catch (error) {
                 console.error('Error loading message data:', error);
-                document.getElementById('plot').innerHTML = `
+                const errorMessage = `
                     <p style="color: red">Error loading message data. Please check if the file exists and try again.</p>
                 `;
+                document.getElementById('plot').innerHTML = errorMessage;
+                document.getElementById('pie-plot').innerHTML = errorMessage;
                 document.getElementById('metadata').innerHTML = '';
+                document.getElementById('pie-metadata').innerHTML = '';
             }
         }
 
