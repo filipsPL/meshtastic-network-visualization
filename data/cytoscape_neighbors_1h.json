@@ -4,31 +4,15 @@
       "id": "!b03da090",
       "label": "flp4",
       "role": 0,
-      "connections": 4
+      "connections": 1
     }
   },
   {
     "data": {
-      "id": "!433c48d0",
-      "label": "STRr",
-      "role": 2,
-      "connections": 2
-    }
-  },
-  {
-    "data": {
-      "id": "!c0c31be8",
-      "label": "flp2",
+      "id": "!970f5908",
+      "label": "flp7",
       "role": 0,
-      "connections": 2
-    }
-  },
-  {
-    "data": {
-      "id": "!da5aced8",
-      "label": "flp1",
-      "role": 0,
-      "connections": 5
+      "connections": 1
     }
   },
   {
@@ -41,6 +25,38 @@
   },
   {
     "data": {
+      "id": "!2f9f7008",
+      "label": "!2f9f7008",
+      "role": null,
+      "connections": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!b03bbe9c",
+      "label": "flp5",
+      "role": 0,
+      "connections": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!da741ad8",
+      "label": "flp6",
+      "role": 0,
+      "connections": 5
+    }
+  },
+  {
+    "data": {
+      "id": "!260eb2e6",
+      "label": "!260eb2e6",
+      "role": null,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
       "id": "!4eee6e7f",
       "label": "6e7f",
       "role": 0,
@@ -49,66 +65,22 @@
   },
   {
     "data": {
-      "id": "!b03bbe9c",
-      "label": "flp5",
-      "role": 0,
-      "connections": 1
-    }
-  },
-  {
-    "data": {
-      "id": "!da5687b0",
-      "label": "!da5687b0",
-      "role": null,
-      "connections": 1
-    }
-  },
-  {
-    "data": {
-      "id": "!1b944f98",
-      "label": "AmdM",
-      "role": 0,
-      "connections": 1
-    }
-  },
-  {
-    "data": {
-      "id": "!b03da090_!433c48d0",
+      "id": "!b03da090_!970f5908",
       "source": "!b03da090",
-      "target": "!433c48d0",
-      "snr": -6.0,
-      "weight": 1,
-      "appearance_count": 1
-    }
-  },
-  {
-    "data": {
-      "id": "!b03da090_!c0c31be8",
-      "source": "!b03da090",
-      "target": "!c0c31be8",
-      "snr": -1.0,
-      "weight": 1,
-      "appearance_count": 1
-    }
-  },
-  {
-    "data": {
-      "id": "!b03da090_!da5aced8",
-      "source": "!b03da090",
-      "target": "!da5aced8",
-      "snr": 6.0,
+      "target": "!970f5908",
+      "snr": 10.0,
       "weight": 2,
-      "appearance_count": 1
+      "count": 1
     }
   },
   {
     "data": {
-      "id": "!da5acdf4_!4eee6e7f",
+      "id": "!da5acdf4_!2f9f7008",
       "source": "!da5acdf4",
-      "target": "!4eee6e7f",
-      "snr": -13.0,
+      "target": "!2f9f7008",
+      "snr": -7.0,
       "weight": 1,
-      "appearance_count": 23
+      "count": 20
     }
   },
   {
@@ -116,59 +88,59 @@
       "id": "!da5acdf4_!b03bbe9c",
       "source": "!da5acdf4",
       "target": "!b03bbe9c",
-      "snr": 9.0,
+      "snr": 12.0,
       "weight": 2,
-      "appearance_count": 75
+      "count": 123
     }
   },
   {
     "data": {
-      "id": "!da5acdf4_!da5687b0",
+      "id": "!da5acdf4_!da741ad8",
       "source": "!da5acdf4",
-      "target": "!da5687b0",
-      "snr": 3.0,
+      "target": "!da741ad8",
+      "snr": -10.0,
+      "weight": 1,
+      "count": 119
+    }
+  },
+  {
+    "data": {
+      "id": "!da741ad8_!260eb2e6",
+      "source": "!da741ad8",
+      "target": "!260eb2e6",
+      "snr": -11.0,
+      "weight": 1,
+      "count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da741ad8_!2f9f7008",
+      "source": "!da741ad8",
+      "target": "!2f9f7008",
+      "snr": 7.0,
       "weight": 2,
-      "appearance_count": 5
+      "count": 1
     }
   },
   {
     "data": {
-      "id": "!da5aced8_!1b944f98",
-      "source": "!da5aced8",
-      "target": "!1b944f98",
-      "snr": -3.0,
+      "id": "!da741ad8_!4eee6e7f",
+      "source": "!da741ad8",
+      "target": "!4eee6e7f",
+      "snr": -10.0,
       "weight": 1,
-      "appearance_count": 1
+      "count": 1
     }
   },
   {
     "data": {
-      "id": "!da5aced8_!433c48d0",
-      "source": "!da5aced8",
-      "target": "!433c48d0",
-      "snr": -18.0,
-      "weight": 1,
-      "appearance_count": 1
-    }
-  },
-  {
-    "data": {
-      "id": "!da5aced8_!b03da090",
-      "source": "!da5aced8",
-      "target": "!b03da090",
-      "snr": 11.0,
+      "id": "!da741ad8_!b03bbe9c",
+      "source": "!da741ad8",
+      "target": "!b03bbe9c",
+      "snr": 10.0,
       "weight": 2,
-      "appearance_count": 1
-    }
-  },
-  {
-    "data": {
-      "id": "!da5aced8_!c0c31be8",
-      "source": "!da5aced8",
-      "target": "!c0c31be8",
-      "snr": -3.0,
-      "weight": 1,
-      "appearance_count": 1
+      "count": 1
     }
   }
 ]

@@ -9,10 +9,10 @@
   },
   {
     "data": {
-      "id": "!da568aac",
-      "label": "Y13",
-      "role": 3,
-      "connections": 2
+      "id": "!433b96bc",
+      "label": "KG01",
+      "role": 0,
+      "connections": 3
     }
   },
   {
@@ -20,25 +20,110 @@
       "id": "!da5acdf4",
       "label": "flp3",
       "role": 0,
+      "connections": 5
+    }
+  },
+  {
+    "data": {
+      "id": "!2f9f6a78",
+      "label": "Luki",
+      "role": 0,
       "connections": 1
     }
   },
   {
     "data": {
-      "id": "!b03bbe9c_!da568aac",
+      "id": "!43b793cc",
+      "label": "San",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5af6fc",
+      "label": "ZEUS",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!f6353ff9",
+      "label": "SKRm",
+      "role": 1,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da741ad8",
+      "label": "flp6",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!b03bbe9c_!433b96bc",
       "source": "!b03bbe9c",
-      "target": "!da568aac",
-      "rssi": -43.0,
+      "target": "!433b96bc",
+      "rssi": -60.0,
+      "count": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!2f9f6a78",
+      "source": "!da5acdf4",
+      "target": "!2f9f6a78",
+      "rssi": -132.0,
+      "count": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!433b96bc",
+      "source": "!da5acdf4",
+      "target": "!433b96bc",
+      "rssi": null,
+      "count": 2
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!43b793cc",
+      "source": "!da5acdf4",
+      "target": "!43b793cc",
+      "rssi": -130.0,
       "count": 1
     }
   },
   {
     "data": {
-      "id": "!da5acdf4_!da568aac",
+      "id": "!da5acdf4_!da5af6fc",
       "source": "!da5acdf4",
-      "target": "!da568aac",
-      "rssi": null,
+      "target": "!da5af6fc",
+      "rssi": -132.0,
       "count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!f6353ff9",
+      "source": "!da5acdf4",
+      "target": "!f6353ff9",
+      "rssi": -134.0,
+      "count": 3
+    }
+  },
+  {
+    "data": {
+      "id": "!da741ad8_!433b96bc",
+      "source": "!da741ad8",
+      "target": "!433b96bc",
+      "rssi": -86.0,
+      "count": 2
     }
   }
 ]

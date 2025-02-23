@@ -9,9 +9,9 @@
   },
   {
     "data": {
-      "id": "!4eee6e7f",
-      "label": "6e7f",
-      "role": 0,
+      "id": "!2f9f7008",
+      "label": "!2f9f7008",
+      "role": null,
       "connections": 1
     }
   },
@@ -25,20 +25,20 @@
   },
   {
     "data": {
-      "id": "!da5687b0",
-      "label": "!da5687b0",
-      "role": null,
+      "id": "!da741ad8",
+      "label": "flp6",
+      "role": 0,
       "connections": 1
     }
   },
   {
     "data": {
-      "id": "!da5acdf4_!4eee6e7f",
+      "id": "!da5acdf4_!2f9f7008",
       "source": "!da5acdf4",
-      "target": "!4eee6e7f",
-      "snr": -13.0,
+      "target": "!2f9f7008",
+      "snr": -10.0,
       "weight": 1,
-      "appearance_count": 6
+      "count": 8
     }
   },
   {
@@ -46,19 +46,19 @@
       "id": "!da5acdf4_!b03bbe9c",
       "source": "!da5acdf4",
       "target": "!b03bbe9c",
-      "snr": 10.0,
+      "snr": 12.0,
       "weight": 2,
-      "appearance_count": 25
+      "count": 29
     }
   },
   {
     "data": {
-      "id": "!da5acdf4_!da5687b0",
+      "id": "!da5acdf4_!da741ad8",
       "source": "!da5acdf4",
-      "target": "!da5687b0",
-      "snr": 3.0,
-      "weight": 2,
-      "appearance_count": 2
+      "target": "!da741ad8",
+      "snr": -8.0,
+      "weight": 1,
+      "count": 25
     }
   }
 ]

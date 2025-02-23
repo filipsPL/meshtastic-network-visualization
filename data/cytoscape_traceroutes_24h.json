@@ -4,116 +4,8 @@
       "id": "1312",
       "label": "1312",
       "role": 0,
-      "connections": 3,
-      "original_name": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 Warszawa-\u0000\u0000oliborz"
-    }
-  },
-  {
-    "data": {
-      "id": "PS4",
-      "label": "PS4",
-      "role": 0,
-      "connections": 1,
-      "original_name": "SP5PS 4"
-    }
-  },
-  {
-    "data": {
-      "id": "AmdM",
-      "label": "AmdM",
-      "role": 0,
-      "connections": 3,
-      "original_name": "AmadMesh"
-    }
-  },
-  {
-    "data": {
-      "id": "flp1",
-      "label": "flp1",
-      "role": 0,
-      "connections": 2,
-      "original_name": "filips-01 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "CM",
-      "label": "CM",
-      "role": 0,
-      "connections": 10,
-      "original_name": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "MacRouter Wawa 87b0",
-      "label": "MacRouter Wawa 87b0",
-      "role": null,
-      "connections": 6,
-      "original_name": "MacRouter Wawa 87b0"
-    }
-  },
-  {
-    "data": {
-      "id": "PS1",
-      "label": "PS1",
-      "role": 0,
-      "connections": 1,
-      "original_name": "PS5PS 1"
-    }
-  },
-  {
-    "data": {
-      "id": "KAR",
-      "label": "KAR",
-      "role": 0,
-      "connections": 2,
-      "original_name": "SQ5KAR"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3",
-      "label": "9cd3",
-      "role": 0,
-      "connections": 9,
-      "original_name": "Dawidy Bankowe PK 9cd3"
-    }
-  },
-  {
-    "data": {
-      "id": "KRNS",
-      "label": "KRNS",
-      "role": 0,
-      "connections": 2,
-      "original_name": "Korniszon"
-    }
-  },
-  {
-    "data": {
-      "id": "KRN2",
-      "label": "KRN2",
-      "role": 0,
-      "connections": 8,
-      "original_name": "Korniszon2"
-    }
-  },
-  {
-    "data": {
-      "id": "LiligoLm",
-      "label": "LiligoLm",
-      "role": null,
-      "connections": 2,
-      "original_name": "LiligoLm"
-    }
-  },
-  {
-    "data": {
-      "id": "6e7f",
-      "label": "6e7f",
-      "role": 0,
-      "connections": 5,
-      "original_name": "PLmesh.org 6e7f"
+      "connections": 4,
+      "original_name": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000Zoliborz"
     }
   },
   {
@@ -121,44 +13,62 @@
       "id": "DM11",
       "label": "DM11",
       "role": 2,
-      "connections": 1,
-      "original_name": "Doman.MESH [DM11|base|868+MQTT|LF]"
+      "connections": 17,
+      "original_name": "Doman.MESH [DM11|base|868+MQTT|MF]"
     }
   },
   {
     "data": {
-      "id": "SSG1",
-      "label": "SSG1",
+      "id": "B_1",
+      "label": "B_1",
       "role": 0,
-      "connections": 2,
-      "original_name": "Wbijaj \u0000\u0000\u0000\u0000 https://tinyurl.com/wa-node"
+      "connections": 6,
+      "original_name": "BRO"
     }
   },
   {
     "data": {
-      "id": "flp5",
-      "label": "flp5",
-      "role": 0,
-      "connections": 3,
-      "original_name": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "Kraina Grzybow | Wwa",
-      "label": "Kraina Grzybow | Wwa",
+      "id": "nevvman 7008 (SP5FRA)",
+      "label": "nevvman 7008 (SP5FRA)",
       "role": null,
-      "connections": 2,
-      "original_name": "Kraina Grzybow | Wwa"
+      "connections": 7,
+      "original_name": "nevvman 7008 (SP5FRA)"
     }
   },
   {
     "data": {
-      "id": "bpf1",
-      "label": "bpf1",
+      "id": "CM",
+      "label": "CM",
       "role": 0,
-      "connections": 7,
-      "original_name": "SQ5BPF-1 868MHz"
+      "connections": 18,
+      "original_name": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "KG01",
+      "label": "KG01",
+      "role": 0,
+      "connections": 6,
+      "original_name": "Kraina Grzybow | MF | Wwa"
+    }
+  },
+  {
+    "data": {
+      "id": "6e7f",
+      "label": "6e7f",
+      "role": 0,
+      "connections": 9,
+      "original_name": "PLmesh.org 6e7f"
+    }
+  },
+  {
+    "data": {
+      "id": "YW",
+      "label": "YW",
+      "role": 0,
+      "connections": 2,
+      "original_name": "Yucca WawaSrod"
     }
   },
   {
@@ -166,71 +76,215 @@
       "id": "flp3",
       "label": "flp3",
       "role": 0,
-      "connections": 4,
-      "original_name": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "connections": 5,
+      "original_name": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota S)"
     }
   },
   {
     "data": {
-      "id": "5go",
-      "label": "5go",
+      "id": "flp5",
+      "label": "flp5",
       "role": 0,
-      "connections": 4,
+      "connections": 5,
+      "original_name": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota N)"
+    }
+  },
+  {
+    "data": {
+      "id": "flp6",
+      "label": "flp6",
+      "role": 0,
+      "connections": 6,
+      "original_name": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)"
+    }
+  },
+  {
+    "data": {
+      "id": "Bem2",
+      "label": "Bem2",
+      "role": 0,
+      "connections": 8,
+      "original_name": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+    }
+  },
+  {
+    "data": {
+      "id": "DM01",
+      "label": "DM01",
+      "role": 0,
+      "connections": 2,
+      "original_name": "Doman [DM01|mobile|868|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "KG02",
+      "label": "KG02",
+      "role": 0,
+      "connections": 3,
+      "original_name": "Kraina Grzybow | MF | Mobile"
+    }
+  },
+  {
+    "data": {
+      "id": "KG03",
+      "label": "KG03",
+      "role": 1,
+      "connections": 1,
+      "original_name": "Kraina Grzybow | MF | NRF"
+    }
+  },
+  {
+    "data": {
+      "id": "Meshtastic 7f5c",
+      "label": "Meshtastic 7f5c",
+      "role": null,
+      "connections": 1,
+      "original_name": "Meshtastic 7f5c"
+    }
+  },
+  {
+    "data": {
+      "id": "PA",
+      "label": "PA",
+      "role": 0,
+      "connections": 6,
+      "original_name": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "GT02 Medium Fast",
+      "label": "GT02 Medium Fast",
+      "role": null,
+      "connections": 3,
+      "original_name": "GT02 Medium Fast"
+    }
+  },
+  {
+    "data": {
+      "id": "6898",
+      "label": "6898",
+      "role": 0,
+      "connections": 3,
+      "original_name": "Meshtastic 6898"
+    }
+  },
+  {
+    "data": {
+      "id": "NEON e9f0 868 MF",
+      "label": "NEON e9f0 868 MF",
+      "role": null,
+      "connections": 3,
+      "original_name": "NEON e9f0 868 MF"
+    }
+  },
+  {
+    "data": {
+      "id": "5GO",
+      "label": "5GO",
+      "role": 0,
+      "connections": 5,
       "original_name": "SP5GO gotoxy dach"
     }
   },
   {
     "data": {
-      "id": "SQ5BPF-2 868MHz",
-      "label": "SQ5BPF-2 868MHz",
-      "role": null,
-      "connections": 1,
-      "original_name": "SQ5BPF-2 868MHz"
-    }
-  },
-  {
-    "data": {
-      "id": "bpf3",
-      "label": "bpf3",
-      "role": 0,
-      "connections": 1,
-      "original_name": "SQ5BPF-3 868MHz"
-    }
-  },
-  {
-    "data": {
-      "id": "GT01",
-      "label": "GT01",
+      "id": "KMT",
+      "label": "KMT",
       "role": 0,
       "connections": 2,
-      "original_name": "W lutym: przejdznamediumfast.pl"
+      "original_name": "Komin|Turow"
     }
   },
   {
     "data": {
-      "id": "C2H5",
-      "label": "C2H5",
+      "id": "SKR",
+      "label": "SKR",
+      "role": 0,
+      "connections": 2,
+      "original_name": "Sokratesa 6"
+    }
+  },
+  {
+    "data": {
+      "id": "PS1",
+      "label": "PS1",
+      "role": 0,
+      "connections": 2,
+      "original_name": "PS5PS 1 MF"
+    }
+  },
+  {
+    "data": {
+      "id": "Pobrze\u0000\u0000e b2e6",
+      "label": "Pobrze\u0000\u0000e b2e6",
+      "role": null,
+      "connections": 1,
+      "original_name": "Pobrze\u0000\u0000e b2e6"
+    }
+  },
+  {
+    "data": {
+      "id": "Router 8538[MF]",
+      "label": "Router 8538[MF]",
+      "role": null,
+      "connections": 3,
+      "original_name": "Router 8538[MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "MNO",
+      "label": "MNO",
+      "role": 3,
+      "connections": 1,
+      "original_name": "SP5MNO"
+    }
+  },
+  {
+    "data": {
+      "id": "SQ5K",
+      "label": "SQ5K",
       "role": 1,
       "connections": 1,
-      "original_name": "https://przejdznamediumfast.pl/"
+      "original_name": "SQ5K-2"
     }
   },
   {
     "data": {
-      "id": "XT2",
-      "label": "XT2",
+      "id": "SKRm",
+      "label": "SKRm",
+      "role": 1,
+      "connections": 1,
+      "original_name": "Sokratesa mobilny"
+    }
+  },
+  {
+    "data": {
+      "id": "ZEUS",
+      "label": "ZEUS",
       "role": 0,
       "connections": 4,
-      "original_name": "XT EPBC"
+      "original_name": "ZEUS"
     }
   },
   {
     "data": {
-      "id": "XT1",
-      "label": "XT1",
+      "id": "drum",
+      "label": "drum",
+      "role": 1,
+      "connections": 1,
+      "original_name": "drummachina 9f6d"
+    }
+  },
+  {
+    "data": {
+      "id": "flp7",
+      "label": "flp7",
       "role": 0,
-      "connections": 3,
-      "original_name": "XT1"
+      "connections": 1,
+      "original_name": "filips-07 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
@@ -244,40 +298,51 @@
   },
   {
     "data": {
-      "id": "flp2",
-      "label": "flp2",
+      "id": "WAT1",
+      "label": "WAT1",
       "role": 0,
-      "connections": 1,
-      "original_name": "filips-02 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "connections": 2,
+      "original_name": "wszechsiec.pl 05 WAT \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
     "data": {
-      "id": "nvvm",
-      "label": "nvvm",
-      "role": 0,
-      "connections": 3,
-      "original_name": "nevvman 7008 (SP5FRA)"
-    }
-  },
-  {
-    "data": {
-      "id": "1312_PS4",
+      "id": "1312_DM11",
       "source": "1312",
-      "target": "PS4",
-      "count": 2,
-      "original_source": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 Warszawa-\u0000\u0000oliborz",
-      "original_target": "SP5PS 4"
+      "target": "DM11",
+      "count": 1,
+      "original_source": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000Zoliborz",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
     }
   },
   {
     "data": {
-      "id": "AmdM_flp1",
-      "source": "AmdM",
-      "target": "flp1",
-      "count": 14,
-      "original_source": "AmadMesh",
-      "original_target": "filips-01 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "id": "B_1_B_1",
+      "source": "B_1",
+      "target": "B_1",
+      "count": 30,
+      "original_source": "BRO",
+      "original_target": "BRO"
+    }
+  },
+  {
+    "data": {
+      "id": "B_1_DM11",
+      "source": "B_1",
+      "target": "DM11",
+      "count": 1,
+      "original_source": "BRO",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "B_1_nevvman 7008 (SP5FRA)",
+      "source": "B_1",
+      "target": "nevvman 7008 (SP5FRA)",
+      "count": 8,
+      "original_source": "BRO",
+      "original_target": "nevvman 7008 (SP5FRA)"
     }
   },
   {
@@ -285,449 +350,669 @@
       "id": "CM_1312",
       "source": "CM",
       "target": "1312",
-      "count": 2,
+      "count": 3,
       "original_source": "Cichy Mesh",
-      "original_target": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 Warszawa-\u0000\u0000oliborz"
+      "original_target": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000Zoliborz"
     }
   },
   {
     "data": {
-      "id": "CM_MacRouter Wawa 87b0",
+      "id": "CM_B_1",
       "source": "CM",
-      "target": "MacRouter Wawa 87b0",
-      "count": 2,
+      "target": "B_1",
+      "count": 3,
       "original_source": "Cichy Mesh",
-      "original_target": "MacRouter Wawa 87b0"
+      "original_target": "BRO"
     }
   },
   {
     "data": {
-      "id": "CM_PS1",
+      "id": "CM_DM11",
       "source": "CM",
-      "target": "PS1",
-      "count": 2,
+      "target": "DM11",
+      "count": 4,
       "original_source": "Cichy Mesh",
-      "original_target": "PS5PS 1"
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
     }
   },
   {
     "data": {
-      "id": "CM_KAR",
+      "id": "CM_KG01",
       "source": "CM",
-      "target": "KAR",
+      "target": "KG01",
       "count": 1,
       "original_source": "Cichy Mesh",
-      "original_target": "SQ5KAR"
+      "original_target": "Kraina Grzybow | MF | Wwa"
     }
   },
   {
     "data": {
-      "id": "9cd3_AmdM",
-      "source": "9cd3",
-      "target": "AmdM",
-      "count": 10,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "AmadMesh"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_CM",
-      "source": "9cd3",
-      "target": "CM",
-      "count": 7,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_KRNS",
-      "source": "9cd3",
-      "target": "KRNS",
-      "count": 2,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "Korniszon"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_KRN2",
-      "source": "9cd3",
-      "target": "KRN2",
-      "count": 4,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "Korniszon2"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_LiligoLm",
-      "source": "9cd3",
-      "target": "LiligoLm",
-      "count": 2,
-      "original_source": "Dawidy Bankowe PK 9cd3",
-      "original_target": "LiligoLm"
-    }
-  },
-  {
-    "data": {
-      "id": "9cd3_6e7f",
-      "source": "9cd3",
+      "id": "CM_6e7f",
+      "source": "CM",
       "target": "6e7f",
-      "count": 4,
-      "original_source": "Dawidy Bankowe PK 9cd3",
+      "count": 12,
+      "original_source": "Cichy Mesh",
       "original_target": "PLmesh.org 6e7f"
     }
   },
   {
     "data": {
-      "id": "DM11_KAR",
-      "source": "DM11",
-      "target": "KAR",
-      "count": 1,
-      "original_source": "Doman.MESH [DM11|base|868+MQTT|LF]",
-      "original_target": "SQ5KAR"
+      "id": "CM_YW",
+      "source": "CM",
+      "target": "YW",
+      "count": 3,
+      "original_source": "Cichy Mesh",
+      "original_target": "Yucca WawaSrod"
     }
   },
   {
     "data": {
-      "id": "KRNS_KRN2",
-      "source": "KRNS",
-      "target": "KRN2",
-      "count": 2,
-      "original_source": "Korniszon",
-      "original_target": "Korniszon2"
-    }
-  },
-  {
-    "data": {
-      "id": "KRN2_CM",
-      "source": "KRN2",
-      "target": "CM",
-      "count": 4,
-      "original_source": "Korniszon2",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "KRN2_MacRouter Wawa 87b0",
-      "source": "KRN2",
-      "target": "MacRouter Wawa 87b0",
-      "count": 2,
-      "original_source": "Korniszon2",
-      "original_target": "MacRouter Wawa 87b0"
-    }
-  },
-  {
-    "data": {
-      "id": "KRN2_6e7f",
-      "source": "KRN2",
-      "target": "6e7f",
-      "count": 2,
-      "original_source": "Korniszon2",
-      "original_target": "PLmesh.org 6e7f"
-    }
-  },
-  {
-    "data": {
-      "id": "KRN2_SSG1",
-      "source": "KRN2",
-      "target": "SSG1",
-      "count": 1,
-      "original_source": "Korniszon2",
-      "original_target": "Wbijaj \u0000\u0000\u0000\u0000 https://tinyurl.com/wa-node"
-    }
-  },
-  {
-    "data": {
-      "id": "KRN2_flp5",
-      "source": "KRN2",
-      "target": "flp5",
-      "count": 2,
-      "original_source": "Korniszon2",
-      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "Kraina Grzybow | Wwa_CM",
-      "source": "Kraina Grzybow | Wwa",
-      "target": "CM",
-      "count": 1,
-      "original_source": "Kraina Grzybow | Wwa",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "LiligoLm_bpf1",
-      "source": "LiligoLm",
-      "target": "bpf1",
-      "count": 2,
-      "original_source": "LiligoLm",
-      "original_target": "SQ5BPF-1 868MHz"
-    }
-  },
-  {
-    "data": {
-      "id": "MacRouter Wawa 87b0_CM",
-      "source": "MacRouter Wawa 87b0",
-      "target": "CM",
-      "count": 1,
-      "original_source": "MacRouter Wawa 87b0",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "MacRouter Wawa 87b0_flp3",
-      "source": "MacRouter Wawa 87b0",
-      "target": "flp3",
-      "count": 4,
-      "original_source": "MacRouter Wawa 87b0",
-      "original_target": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "6e7f_MacRouter Wawa 87b0",
-      "source": "6e7f",
-      "target": "MacRouter Wawa 87b0",
-      "count": 1,
-      "original_source": "PLmesh.org 6e7f",
-      "original_target": "MacRouter Wawa 87b0"
-    }
-  },
-  {
-    "data": {
-      "id": "6e7f_flp3",
-      "source": "6e7f",
+      "id": "CM_flp3",
+      "source": "CM",
       "target": "flp3",
       "count": 5,
-      "original_source": "PLmesh.org 6e7f",
-      "original_target": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "original_source": "Cichy Mesh",
+      "original_target": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota S)"
     }
   },
   {
     "data": {
-      "id": "5go_9cd3",
-      "source": "5go",
-      "target": "9cd3",
-      "count": 23,
-      "original_source": "SP5GO gotoxy dach",
-      "original_target": "Dawidy Bankowe PK 9cd3"
+      "id": "CM_flp5",
+      "source": "CM",
+      "target": "flp5",
+      "count": 12,
+      "original_source": "Cichy Mesh",
+      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota N)"
     }
   },
   {
     "data": {
-      "id": "5go_6e7f",
-      "source": "5go",
-      "target": "6e7f",
-      "count": 2,
-      "original_source": "SP5GO gotoxy dach",
-      "original_target": "PLmesh.org 6e7f"
-    }
-  },
-  {
-    "data": {
-      "id": "5go_bpf1",
-      "source": "5go",
-      "target": "bpf1",
-      "count": 2,
-      "original_source": "SP5GO gotoxy dach",
-      "original_target": "SQ5BPF-1 868MHz"
-    }
-  },
-  {
-    "data": {
-      "id": "bpf1_1312",
-      "source": "bpf1",
-      "target": "1312",
-      "count": 2,
-      "original_source": "SQ5BPF-1 868MHz",
-      "original_target": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 Warszawa-\u0000\u0000oliborz"
-    }
-  },
-  {
-    "data": {
-      "id": "bpf1_AmdM",
-      "source": "bpf1",
-      "target": "AmdM",
+      "id": "CM_flp6",
+      "source": "CM",
+      "target": "flp6",
       "count": 4,
-      "original_source": "SQ5BPF-1 868MHz",
-      "original_target": "AmadMesh"
+      "original_source": "Cichy Mesh",
+      "original_target": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)"
     }
   },
   {
     "data": {
-      "id": "bpf1_9cd3",
-      "source": "bpf1",
-      "target": "9cd3",
-      "count": 2,
-      "original_source": "SQ5BPF-1 868MHz",
-      "original_target": "Dawidy Bankowe PK 9cd3"
-    }
-  },
-  {
-    "data": {
-      "id": "SQ5BPF-2 868MHz_bpf1",
-      "source": "SQ5BPF-2 868MHz",
-      "target": "bpf1",
-      "count": 2,
-      "original_source": "SQ5BPF-2 868MHz",
-      "original_target": "SQ5BPF-1 868MHz"
-    }
-  },
-  {
-    "data": {
-      "id": "bpf3_bpf1",
-      "source": "bpf3",
-      "target": "bpf1",
-      "count": 2,
-      "original_source": "SQ5BPF-3 868MHz",
-      "original_target": "SQ5BPF-1 868MHz"
-    }
-  },
-  {
-    "data": {
-      "id": "GT01_9cd3",
-      "source": "GT01",
-      "target": "9cd3",
-      "count": 6,
-      "original_source": "W lutym: przejdznamediumfast.pl",
-      "original_target": "Dawidy Bankowe PK 9cd3"
-    }
-  },
-  {
-    "data": {
-      "id": "GT01_5go",
-      "source": "GT01",
-      "target": "5go",
-      "count": 27,
-      "original_source": "W lutym: przejdznamediumfast.pl",
-      "original_target": "SP5GO gotoxy dach"
-    }
-  },
-  {
-    "data": {
-      "id": "SSG1_C2H5",
-      "source": "SSG1",
-      "target": "C2H5",
-      "count": 1,
-      "original_source": "Wbijaj \u0000\u0000\u0000\u0000 https://tinyurl.com/wa-node",
-      "original_target": "https://przejdznamediumfast.pl/"
-    }
-  },
-  {
-    "data": {
-      "id": "XT2_CM",
-      "source": "XT2",
-      "target": "CM",
-      "count": 2,
-      "original_source": "XT EPBC",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "XT2_Kraina Grzybow | Wwa",
-      "source": "XT2",
-      "target": "Kraina Grzybow | Wwa",
-      "count": 1,
-      "original_source": "XT EPBC",
-      "original_target": "Kraina Grzybow | Wwa"
-    }
-  },
-  {
-    "data": {
-      "id": "XT2_XT1",
-      "source": "XT2",
-      "target": "XT1",
-      "count": 1,
-      "original_source": "XT EPBC",
-      "original_target": "XT1"
-    }
-  },
-  {
-    "data": {
-      "id": "XT1_CM",
-      "source": "XT1",
-      "target": "CM",
-      "count": 2,
-      "original_source": "XT1",
-      "original_target": "Cichy Mesh"
-    }
-  },
-  {
-    "data": {
-      "id": "XT1_XT2",
-      "source": "XT1",
-      "target": "XT2",
-      "count": 6,
-      "original_source": "XT1",
-      "original_target": "XT EPBC"
-    }
-  },
-  {
-    "data": {
-      "id": "flp1_flp4",
-      "source": "flp1",
-      "target": "flp4",
-      "count": 4,
-      "original_source": "filips-01 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
-      "original_target": "filips-04 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
-    }
-  },
-  {
-    "data": {
-      "id": "flp2_KRN2",
-      "source": "flp2",
-      "target": "KRN2",
-      "count": 2,
-      "original_source": "filips-02 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
-      "original_target": "Korniszon2"
-    }
-  },
-  {
-    "data": {
-      "id": "flp3_nvvm",
-      "source": "flp3",
-      "target": "nvvm",
-      "count": 1,
-      "original_source": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "id": "CM_nevvman 7008 (SP5FRA)",
+      "source": "CM",
+      "target": "nevvman 7008 (SP5FRA)",
+      "count": 3,
+      "original_source": "Cichy Mesh",
       "original_target": "nevvman 7008 (SP5FRA)"
     }
   },
   {
     "data": {
-      "id": "flp5_flp3",
-      "source": "flp5",
-      "target": "flp3",
-      "count": 2,
-      "original_source": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
-      "original_target": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "id": "CM_Bem2",
+      "source": "CM",
+      "target": "Bem2",
+      "count": 3,
+      "original_source": "Cichy Mesh",
+      "original_target": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
     "data": {
-      "id": "nvvm_MacRouter Wawa 87b0",
-      "source": "nvvm",
-      "target": "MacRouter Wawa 87b0",
+      "id": "DM01_KG02",
+      "source": "DM01",
+      "target": "KG02",
       "count": 1,
-      "original_source": "nevvman 7008 (SP5FRA)",
-      "original_target": "MacRouter Wawa 87b0"
+      "original_source": "Doman [DM01|mobile|868|MF]",
+      "original_target": "Kraina Grzybow | MF | Mobile"
     }
   },
   {
     "data": {
-      "id": "nvvm_flp5",
-      "source": "nvvm",
-      "target": "flp5",
+      "id": "DM11_1312",
+      "source": "DM11",
+      "target": "1312",
+      "count": 1,
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000Zoliborz"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11_CM",
+      "source": "DM11",
+      "target": "CM",
+      "count": 40,
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11_DM01",
+      "source": "DM11",
+      "target": "DM01",
+      "count": 3,
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "Doman [DM01|mobile|868|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11_KG02",
+      "source": "DM11",
+      "target": "KG02",
+      "count": 1,
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "Kraina Grzybow | MF | Mobile"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11_KG03",
+      "source": "DM11",
+      "target": "KG03",
+      "count": 1,
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "Kraina Grzybow | MF | NRF"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11_KG01",
+      "source": "DM11",
+      "target": "KG01",
+      "count": 3,
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "Kraina Grzybow | MF | Wwa"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11_Meshtastic 7f5c",
+      "source": "DM11",
+      "target": "Meshtastic 7f5c",
+      "count": 1,
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "Meshtastic 7f5c"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11_PA",
+      "source": "DM11",
+      "target": "PA",
       "count": 2,
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "GT02 Medium Fast_6898",
+      "source": "GT02 Medium Fast",
+      "target": "6898",
+      "count": 17,
+      "original_source": "GT02 Medium Fast",
+      "original_target": "Meshtastic 6898"
+    }
+  },
+  {
+    "data": {
+      "id": "GT02 Medium Fast_NEON e9f0 868 MF",
+      "source": "GT02 Medium Fast",
+      "target": "NEON e9f0 868 MF",
+      "count": 30,
+      "original_source": "GT02 Medium Fast",
+      "original_target": "NEON e9f0 868 MF"
+    }
+  },
+  {
+    "data": {
+      "id": "GT02 Medium Fast_5GO",
+      "source": "GT02 Medium Fast",
+      "target": "5GO",
+      "count": 8,
+      "original_source": "GT02 Medium Fast",
+      "original_target": "SP5GO gotoxy dach"
+    }
+  },
+  {
+    "data": {
+      "id": "KMT_CM",
+      "source": "KMT",
+      "target": "CM",
+      "count": 3,
+      "original_source": "Komin|Turow",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "KG02_DM11",
+      "source": "KG02",
+      "target": "DM11",
+      "count": 6,
+      "original_source": "Kraina Grzybow | MF | Mobile",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "KG01_CM",
+      "source": "KG01",
+      "target": "CM",
+      "count": 2,
+      "original_source": "Kraina Grzybow | MF | Wwa",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "KG01_DM11",
+      "source": "KG01",
+      "target": "DM11",
+      "count": 1,
+      "original_source": "Kraina Grzybow | MF | Wwa",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "KG01_nevvman 7008 (SP5FRA)",
+      "source": "KG01",
+      "target": "nevvman 7008 (SP5FRA)",
+      "count": 21,
+      "original_source": "Kraina Grzybow | MF | Wwa",
+      "original_target": "nevvman 7008 (SP5FRA)"
+    }
+  },
+  {
+    "data": {
+      "id": "6898_DM11",
+      "source": "6898",
+      "target": "DM11",
+      "count": 18,
+      "original_source": "Meshtastic 6898",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "NEON e9f0 868 MF_6e7f",
+      "source": "NEON e9f0 868 MF",
+      "target": "6e7f",
+      "count": 22,
+      "original_source": "NEON e9f0 868 MF",
+      "original_target": "PLmesh.org 6e7f"
+    }
+  },
+  {
+    "data": {
+      "id": "NEON e9f0 868 MF_5GO",
+      "source": "NEON e9f0 868 MF",
+      "target": "5GO",
+      "count": 8,
+      "original_source": "NEON e9f0 868 MF",
+      "original_target": "SP5GO gotoxy dach"
+    }
+  },
+  {
+    "data": {
+      "id": "6e7f_flp5",
+      "source": "6e7f",
+      "target": "flp5",
+      "count": 16,
+      "original_source": "PLmesh.org 6e7f",
+      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota N)"
+    }
+  },
+  {
+    "data": {
+      "id": "6e7f_flp6",
+      "source": "6e7f",
+      "target": "flp6",
+      "count": 10,
+      "original_source": "PLmesh.org 6e7f",
+      "original_target": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)"
+    }
+  },
+  {
+    "data": {
+      "id": "PA_CM",
+      "source": "PA",
+      "target": "CM",
+      "count": 11,
+      "original_source": "PRZY AGORZE",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "PA_SKR",
+      "source": "PA",
+      "target": "SKR",
+      "count": 2,
+      "original_source": "PRZY AGORZE",
+      "original_target": "Sokratesa 6"
+    }
+  },
+  {
+    "data": {
+      "id": "PS1_CM",
+      "source": "PS1",
+      "target": "CM",
+      "count": 4,
+      "original_source": "PS5PS 1 MF",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "Pobrze\u0000\u0000e b2e6_6e7f",
+      "source": "Pobrze\u0000\u0000e b2e6",
+      "target": "6e7f",
+      "count": 6,
+      "original_source": "Pobrze\u0000\u0000e b2e6",
+      "original_target": "PLmesh.org 6e7f"
+    }
+  },
+  {
+    "data": {
+      "id": "Router 8538[MF]_DM11",
+      "source": "Router 8538[MF]",
+      "target": "DM11",
+      "count": 2,
+      "original_source": "Router 8538[MF]",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "Router 8538[MF]_PS1",
+      "source": "Router 8538[MF]",
+      "target": "PS1",
+      "count": 4,
+      "original_source": "Router 8538[MF]",
+      "original_target": "PS5PS 1 MF"
+    }
+  },
+  {
+    "data": {
+      "id": "5GO_6898",
+      "source": "5GO",
+      "target": "6898",
+      "count": 2,
+      "original_source": "SP5GO gotoxy dach",
+      "original_target": "Meshtastic 6898"
+    }
+  },
+  {
+    "data": {
+      "id": "5GO_6e7f",
+      "source": "5GO",
+      "target": "6e7f",
+      "count": 3,
+      "original_source": "SP5GO gotoxy dach",
+      "original_target": "PLmesh.org 6e7f"
+    }
+  },
+  {
+    "data": {
+      "id": "5GO_Bem2",
+      "source": "5GO",
+      "target": "Bem2",
+      "count": 6,
+      "original_source": "SP5GO gotoxy dach",
+      "original_target": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+    }
+  },
+  {
+    "data": {
+      "id": "MNO_1312",
+      "source": "MNO",
+      "target": "1312",
+      "count": 1,
+      "original_source": "SP5MNO",
+      "original_target": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001312\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000Zoliborz"
+    }
+  },
+  {
+    "data": {
+      "id": "SQ5K_KMT",
+      "source": "SQ5K",
+      "target": "KMT",
+      "count": 2,
+      "original_source": "SQ5K-2",
+      "original_target": "Komin|Turow"
+    }
+  },
+  {
+    "data": {
+      "id": "SKR_PA",
+      "source": "SKR",
+      "target": "PA",
+      "count": 1,
+      "original_source": "Sokratesa 6",
+      "original_target": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "SKRm_PA",
+      "source": "SKRm",
+      "target": "PA",
+      "count": 1,
+      "original_source": "Sokratesa mobilny",
+      "original_target": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "YW_CM",
+      "source": "YW",
+      "target": "CM",
+      "count": 7,
+      "original_source": "Yucca WawaSrod",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "ZEUS_PA",
+      "source": "ZEUS",
+      "target": "PA",
+      "count": 9,
+      "original_source": "ZEUS",
+      "original_target": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "ZEUS_Bem2",
+      "source": "ZEUS",
+      "target": "Bem2",
+      "count": 13,
+      "original_source": "ZEUS",
+      "original_target": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+    }
+  },
+  {
+    "data": {
+      "id": "drum_6e7f",
+      "source": "drum",
+      "target": "6e7f",
+      "count": 3,
+      "original_source": "drummachina 9f6d",
+      "original_target": "PLmesh.org 6e7f"
+    }
+  },
+  {
+    "data": {
+      "id": "flp3_6e7f",
+      "source": "flp3",
+      "target": "6e7f",
+      "count": 3,
+      "original_source": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota S)",
+      "original_target": "PLmesh.org 6e7f"
+    }
+  },
+  {
+    "data": {
+      "id": "flp3_flp5",
+      "source": "flp3",
+      "target": "flp5",
+      "count": 3,
+      "original_source": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota S)",
+      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota N)"
+    }
+  },
+  {
+    "data": {
+      "id": "flp6_6e7f",
+      "source": "flp6",
+      "target": "6e7f",
+      "count": 6,
+      "original_source": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)",
+      "original_target": "PLmesh.org 6e7f"
+    }
+  },
+  {
+    "data": {
+      "id": "flp6_flp3",
+      "source": "flp6",
+      "target": "flp3",
+      "count": 10,
+      "original_source": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)",
+      "original_target": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota S)"
+    }
+  },
+  {
+    "data": {
+      "id": "flp6_flp5",
+      "source": "flp6",
+      "target": "flp5",
+      "count": 3,
+      "original_source": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)",
+      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota N)"
+    }
+  },
+  {
+    "data": {
+      "id": "flp7_flp4",
+      "source": "flp7",
+      "target": "flp4",
+      "count": 8,
+      "original_source": "filips-07 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "filips-04 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+    }
+  },
+  {
+    "data": {
+      "id": "nevvman 7008 (SP5FRA)_B_1",
+      "source": "nevvman 7008 (SP5FRA)",
+      "target": "B_1",
+      "count": 12,
       "original_source": "nevvman 7008 (SP5FRA)",
-      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "original_target": "BRO"
+    }
+  },
+  {
+    "data": {
+      "id": "nevvman 7008 (SP5FRA)_flp3",
+      "source": "nevvman 7008 (SP5FRA)",
+      "target": "flp3",
+      "count": 15,
+      "original_source": "nevvman 7008 (SP5FRA)",
+      "original_target": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota S)"
+    }
+  },
+  {
+    "data": {
+      "id": "nevvman 7008 (SP5FRA)_flp5",
+      "source": "nevvman 7008 (SP5FRA)",
+      "target": "flp5",
+      "count": 6,
+      "original_source": "nevvman 7008 (SP5FRA)",
+      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota N)"
+    }
+  },
+  {
+    "data": {
+      "id": "nevvman 7008 (SP5FRA)_flp6",
+      "source": "nevvman 7008 (SP5FRA)",
+      "target": "flp6",
+      "count": 11,
+      "original_source": "nevvman 7008 (SP5FRA)",
+      "original_target": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)"
+    }
+  },
+  {
+    "data": {
+      "id": "WAT1_DM11",
+      "source": "WAT1",
+      "target": "DM11",
+      "count": 3,
+      "original_source": "wszechsiec.pl 05 WAT \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "WAT1_ZEUS",
+      "source": "WAT1",
+      "target": "ZEUS",
+      "count": 21,
+      "original_source": "wszechsiec.pl 05 WAT \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "ZEUS"
+    }
+  },
+  {
+    "data": {
+      "id": "Bem2_CM",
+      "source": "Bem2",
+      "target": "CM",
+      "count": 5,
+      "original_source": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "Bem2_DM11",
+      "source": "Bem2",
+      "target": "DM11",
+      "count": 1,
+      "original_source": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "Bem2_KG01",
+      "source": "Bem2",
+      "target": "KG01",
+      "count": 2,
+      "original_source": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "Kraina Grzybow | MF | Wwa"
+    }
+  },
+  {
+    "data": {
+      "id": "Bem2_Router 8538[MF]",
+      "source": "Bem2",
+      "target": "Router 8538[MF]",
+      "count": 6,
+      "original_source": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "Router 8538[MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "Bem2_ZEUS",
+      "source": "Bem2",
+      "target": "ZEUS",
+      "count": 6,
+      "original_source": "wszechsiec.pl 13 Bemowo\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "ZEUS"
     }
   }
 ]

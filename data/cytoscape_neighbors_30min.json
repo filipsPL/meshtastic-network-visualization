@@ -1,6 +1,22 @@
 [
   {
     "data": {
+      "id": "!b03da090",
+      "label": "flp4",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!970f5908",
+      "label": "flp7",
+      "role": 0,
+      "connections": 1
+    }
+  },
+  {
+    "data": {
       "id": "!da5acdf4",
       "label": "flp3",
       "role": 0,
@@ -9,9 +25,9 @@
   },
   {
     "data": {
-      "id": "!4eee6e7f",
-      "label": "6e7f",
-      "role": 0,
+      "id": "!2f9f7008",
+      "label": "!2f9f7008",
+      "role": null,
       "connections": 1
     }
   },
@@ -25,20 +41,30 @@
   },
   {
     "data": {
-      "id": "!da5687b0",
-      "label": "!da5687b0",
-      "role": null,
+      "id": "!da741ad8",
+      "label": "flp6",
+      "role": 0,
       "connections": 1
     }
   },
   {
     "data": {
-      "id": "!da5acdf4_!4eee6e7f",
+      "id": "!b03da090_!970f5908",
+      "source": "!b03da090",
+      "target": "!970f5908",
+      "snr": 10.0,
+      "weight": 2,
+      "count": 1
+    }
+  },
+  {
+    "data": {
+      "id": "!da5acdf4_!2f9f7008",
       "source": "!da5acdf4",
-      "target": "!4eee6e7f",
-      "snr": -12.0,
+      "target": "!2f9f7008",
+      "snr": -9.0,
       "weight": 1,
-      "appearance_count": 11
+      "count": 16
     }
   },
   {
@@ -48,17 +74,17 @@
       "target": "!b03bbe9c",
       "snr": 11.0,
       "weight": 2,
-      "appearance_count": 41
+      "count": 59
     }
   },
   {
     "data": {
-      "id": "!da5acdf4_!da5687b0",
+      "id": "!da5acdf4_!da741ad8",
       "source": "!da5acdf4",
-      "target": "!da5687b0",
-      "snr": 3.0,
-      "weight": 2,
-      "appearance_count": 2
+      "target": "!da741ad8",
+      "snr": -10.0,
+      "weight": 1,
+      "count": 55
     }
   }
 ]

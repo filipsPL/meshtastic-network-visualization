@@ -1,11 +1,83 @@
 [
   {
     "data": {
-      "id": "KRN2",
-      "label": "KRN2",
+      "id": "B_1",
+      "label": "B_1",
+      "role": 0,
+      "connections": 3,
+      "original_name": "BRO"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11",
+      "label": "DM11",
+      "role": 2,
+      "connections": 2,
+      "original_name": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "PA",
+      "label": "PA",
+      "role": 0,
+      "connections": 5,
+      "original_name": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "KG01",
+      "label": "KG01",
       "role": 0,
       "connections": 2,
-      "original_name": "Korniszon2"
+      "original_name": "Kraina Grzybow | MF | Wwa"
+    }
+  },
+  {
+    "data": {
+      "id": "nevvman 7008 (SP5FRA)",
+      "label": "nevvman 7008 (SP5FRA)",
+      "role": null,
+      "connections": 4,
+      "original_name": "nevvman 7008 (SP5FRA)"
+    }
+  },
+  {
+    "data": {
+      "id": "CM",
+      "label": "CM",
+      "role": 0,
+      "connections": 1,
+      "original_name": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "SKR",
+      "label": "SKR",
+      "role": 0,
+      "connections": 2,
+      "original_name": "Sokratesa 6"
+    }
+  },
+  {
+    "data": {
+      "id": "SKRm",
+      "label": "SKRm",
+      "role": 1,
+      "connections": 1,
+      "original_name": "Sokratesa mobilny"
+    }
+  },
+  {
+    "data": {
+      "id": "flp6",
+      "label": "flp6",
+      "role": 0,
+      "connections": 2,
+      "original_name": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)"
     }
   },
   {
@@ -13,56 +85,165 @@
       "id": "6e7f",
       "label": "6e7f",
       "role": 0,
-      "connections": 2,
+      "connections": 1,
       "original_name": "PLmesh.org 6e7f"
     }
   },
   {
     "data": {
-      "id": "flp3",
-      "label": "flp3",
+      "id": "flp7",
+      "label": "flp7",
       "role": 0,
       "connections": 1,
-      "original_name": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "original_name": "filips-07 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
     "data": {
-      "id": "flp2",
-      "label": "flp2",
+      "id": "flp4",
+      "label": "flp4",
       "role": 0,
       "connections": 1,
-      "original_name": "filips-02 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "original_name": "filips-04 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
     "data": {
-      "id": "KRN2_6e7f",
-      "source": "KRN2",
-      "target": "6e7f",
+      "id": "flp5",
+      "label": "flp5",
+      "role": 0,
+      "connections": 1,
+      "original_name": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota N)"
+    }
+  },
+  {
+    "data": {
+      "id": "B_1_B_1",
+      "source": "B_1",
+      "target": "B_1",
+      "count": 12,
+      "original_source": "BRO",
+      "original_target": "BRO"
+    }
+  },
+  {
+    "data": {
+      "id": "DM11_PA",
+      "source": "DM11",
+      "target": "PA",
       "count": 2,
-      "original_source": "Korniszon2",
+      "original_source": "Doman.MESH [DM11|base|868+MQTT|MF]",
+      "original_target": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "KG01_DM11",
+      "source": "KG01",
+      "target": "DM11",
+      "count": 1,
+      "original_source": "Kraina Grzybow | MF | Wwa",
+      "original_target": "Doman.MESH [DM11|base|868+MQTT|MF]"
+    }
+  },
+  {
+    "data": {
+      "id": "KG01_nevvman 7008 (SP5FRA)",
+      "source": "KG01",
+      "target": "nevvman 7008 (SP5FRA)",
+      "count": 8,
+      "original_source": "Kraina Grzybow | MF | Wwa",
+      "original_target": "nevvman 7008 (SP5FRA)"
+    }
+  },
+  {
+    "data": {
+      "id": "PA_CM",
+      "source": "PA",
+      "target": "CM",
+      "count": 2,
+      "original_source": "PRZY AGORZE",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "PA_SKR",
+      "source": "PA",
+      "target": "SKR",
+      "count": 2,
+      "original_source": "PRZY AGORZE",
+      "original_target": "Sokratesa 6"
+    }
+  },
+  {
+    "data": {
+      "id": "SKR_PA",
+      "source": "SKR",
+      "target": "PA",
+      "count": 1,
+      "original_source": "Sokratesa 6",
+      "original_target": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "SKRm_PA",
+      "source": "SKRm",
+      "target": "PA",
+      "count": 1,
+      "original_source": "Sokratesa mobilny",
+      "original_target": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "flp6_6e7f",
+      "source": "flp6",
+      "target": "6e7f",
+      "count": 3,
+      "original_source": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)",
       "original_target": "PLmesh.org 6e7f"
     }
   },
   {
     "data": {
-      "id": "6e7f_flp3",
-      "source": "6e7f",
-      "target": "flp3",
+      "id": "flp7_flp4",
+      "source": "flp7",
+      "target": "flp4",
       "count": 2,
-      "original_source": "PLmesh.org 6e7f",
-      "original_target": "filips-03 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+      "original_source": "filips-07 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "original_target": "filips-04 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
     }
   },
   {
     "data": {
-      "id": "flp2_KRN2",
-      "source": "flp2",
-      "target": "KRN2",
-      "count": 2,
-      "original_source": "filips-02 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
-      "original_target": "Korniszon2"
+      "id": "nevvman 7008 (SP5FRA)_B_1",
+      "source": "nevvman 7008 (SP5FRA)",
+      "target": "B_1",
+      "count": 6,
+      "original_source": "nevvman 7008 (SP5FRA)",
+      "original_target": "BRO"
+    }
+  },
+  {
+    "data": {
+      "id": "nevvman 7008 (SP5FRA)_flp5",
+      "source": "nevvman 7008 (SP5FRA)",
+      "target": "flp5",
+      "count": 3,
+      "original_source": "nevvman 7008 (SP5FRA)",
+      "original_target": "filips-05 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota N)"
+    }
+  },
+  {
+    "data": {
+      "id": "nevvman 7008 (SP5FRA)_flp6",
+      "source": "nevvman 7008 (SP5FRA)",
+      "target": "flp6",
+      "count": 3,
+      "original_source": "nevvman 7008 (SP5FRA)",
+      "original_target": "filips-06 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 (Ochota W)"
     }
   }
 ]

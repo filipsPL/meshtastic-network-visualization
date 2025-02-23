@@ -1,1 +1,49 @@
-[]
+[
+  {
+    "data": {
+      "id": "PA",
+      "label": "PA",
+      "role": 0,
+      "connections": 2,
+      "original_name": "PRZY AGORZE"
+    }
+  },
+  {
+    "data": {
+      "id": "CM",
+      "label": "CM",
+      "role": 0,
+      "connections": 1,
+      "original_name": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "SKRm",
+      "label": "SKRm",
+      "role": 1,
+      "connections": 1,
+      "original_name": "Sokratesa mobilny"
+    }
+  },
+  {
+    "data": {
+      "id": "PA_CM",
+      "source": "PA",
+      "target": "CM",
+      "count": 1,
+      "original_source": "PRZY AGORZE",
+      "original_target": "Cichy Mesh"
+    }
+  },
+  {
+    "data": {
+      "id": "SKRm_PA",
+      "source": "SKRm",
+      "target": "PA",
+      "count": 1,
+      "original_source": "Sokratesa mobilny",
+      "original_target": "PRZY AGORZE"
+    }
+  }
+]
