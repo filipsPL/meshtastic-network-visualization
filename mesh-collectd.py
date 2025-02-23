@@ -63,10 +63,10 @@ def init_db(db_path="mqtt_messages.db"):
     cursor = conn.cursor()
 
     # Drop and recreate nodes table with explicit PRIMARY KEY constraint
-    cursor.execute("DROP TABLE IF EXISTS nodes")
+    # cursor.execute("DROP TABLE IF EXISTS nodes")
     cursor.execute(
-        """CREATE TABLE nodes (
-               id INTEGER NOT NULL PRIMARY KEY,
+        """CREATE TABLE IF NOT EXISTS nodes (
+               id INTEGER NOT NULL PRIMARY KEY,  -- This ensures uniqueness
                longname TEXT,
                shortname TEXT,
                hardware INTEGER,
@@ -112,21 +112,78 @@ def init_db(db_path="mqtt_messages.db"):
            )"""
     )
 
+    # Add new nodes_count table
+    cursor.execute(
+        """CREATE TABLE IF NOT EXISTS nodes_count (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               node_id INTEGER,
+               timestamp INTEGER,
+               count_30min INTEGER,
+               count_60min INTEGER,
+               count_120min INTEGER
+           )"""
+    )
+
     conn.commit()
     return conn
+
+
+def save_nodes_count_to_db(conn, node_id, timestamp, counts):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            """INSERT INTO nodes_count 
+               (node_id, timestamp, count_30min, count_60min, count_120min)
+               VALUES (?, ?, ?, ?, ?)""",
+            (node_id, timestamp, counts.get("30min", 0), counts.get("60min", 0), counts.get("120min", 0)),
+        )
+        conn.commit()
+    except Exception as e:
+        print(f"Error saving node counts: {e}")
+        conn.rollback()
 
 
 def save_nodeinfo_to_db(conn, node_id, longname=None, shortname=None, hardware=None, role=None, timestamp=None, latitude=None, longitude=None):
     cursor = conn.cursor()
     try:
-        cursor.execute(
-            """INSERT OR REPLACE INTO nodes (id, longname, shortname, hardware, role, last_seen, latitude, longitude)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-            (node_id, longname, shortname, hardware, role, timestamp, latitude, longitude)
-        )
+        # First check if the node exists
+        cursor.execute("SELECT longname, shortname, hardware, role, latitude, longitude FROM nodes WHERE id = ?", (node_id,))
+        existing = cursor.fetchone()
+
+        if existing:
+            # Update existing node, keeping old values when new ones aren't provided
+            update_values = [
+                longname if longname is not None else existing[0],
+                shortname if shortname is not None else existing[1],
+                hardware if hardware is not None else existing[2],
+                role if role is not None else existing[3],
+                timestamp,  # Always update timestamp if provided
+                latitude if latitude is not None else existing[4],
+                longitude if longitude is not None else existing[5],
+                node_id
+            ]
+            
+            cursor.execute(
+                """UPDATE nodes 
+                   SET longname = ?, shortname = ?, hardware = ?, role = ?, 
+                       last_seen = ?, latitude = ?, longitude = ?
+                   WHERE id = ?""",
+                tuple(update_values)
+            )
+        else:
+            # Insert new node
+            cursor.execute(
+                """INSERT INTO nodes 
+                   (id, longname, shortname, hardware, role, last_seen, latitude, longitude)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                (node_id, longname, shortname, hardware, role, timestamp, latitude, longitude)
+            )
+        
         conn.commit()
+        print(f"Successfully {'updated' if existing else 'inserted'} node {node_id}")
+    
     except Exception as e:
-        print(f"Error saving node info: {e}")
+        print(f"Error saving node info for node {node_id}: {e}")
         conn.rollback()
 
 
@@ -193,6 +250,8 @@ def db_worker(queue, db_path):
                 save_nodeinfo_to_db(conn, *item[1:])
             elif item[0] == "traceroute":
                 save_traceroute_to_db(conn, *item[1:])
+            elif item[0] == "nodes_count":
+                save_nodes_count_to_db(conn, *item[1:])
         except Exception as e:
             print(f"Database error: {e}")
     conn.close()
@@ -265,6 +324,31 @@ def on_message(client, userdata, msg):
 
         userdata.put(("message", topic, node_id, receiver, physical_sender, timestamp, rssi, snr, msg_type))
 
+        # Handle nodes count messages
+        if "nodes_count" in topic:
+            try:
+                node_id = int(topic.split("/")[-1], 16)  # Convert hex node ID to int
+                payload = json.loads(msg.payload.decode("utf-8"))
+                timestamp = int(time.time())
+
+                print(
+                    f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [NODES_COUNT] "
+                    f"Node {node_id} | 30min: {payload.get('30min', 0)} | "
+                    f"60min: {payload.get('60min', 0)} | 120min: {payload.get('120min', 0)}"
+                )
+
+                userdata.put(("nodes_count", node_id, timestamp, payload))
+                return
+            except Exception as e:
+                print(f"Error processing nodes count message: {e}")
+                return
+
+        # Rest of the existing message handling...
+        try:
+            payload = json.loads(msg.payload.decode("utf-8"))
+        except:
+            return
+
         if msg_type == "nodeinfo" and "payload" in payload:
             node_payload = payload["payload"]
             if all(k in node_payload for k in ["id", "longname", "shortname", "hardware", "role"]):
@@ -317,22 +401,44 @@ def on_message(client, userdata, msg):
 
                 log_message("POSITION", node_id, {"latitude": latitude, "longitude": longitude})
 
+                # Update only location information for the node
                 userdata.put(
                     (
                         "position",
-                        node_id,
-                        None,
-                        None,
-                        None,
-                        None,
-                        timestamp,
-                        latitude,
-                        longitude,
+                        node_id,  # node_id
+                        None,  # longname (no update)
+                        None,  # shortname (no update)
+                        None,  # hardware (no update)
+                        None,  # role (no update)
+                        timestamp,  # last_seen
+                        latitude,  # latitude
+                        longitude,  # longitude
                     )
                 )
 
     except Exception as e:
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [ERROR] Error processing message: {e}")
+
+
+def cleanup_duplicate_nodes(conn):
+    cursor = conn.cursor()
+    try:
+        # Find and remove duplicates, keeping the most recent entry
+        cursor.execute(
+            """
+            DELETE FROM nodes 
+            WHERE rowid NOT IN (
+                SELECT MAX(rowid)
+                FROM nodes
+                GROUP BY id
+            )
+        """
+        )
+        conn.commit()
+        print("Cleaned up duplicate node entries")
+    except Exception as e:
+        print(f"Error cleaning up duplicates: {e}")
+        conn.rollback()
 
 
 # Load configuration
@@ -341,6 +447,8 @@ config = load_config()
 # Initialize database
 db_path = "mqtt_messages.db"
 db_conn = init_db(db_path)
+
+cleanup_duplicate_nodes(db_conn)
 
 # Create a thread-safe queue for database operations
 message_queue = Queue()

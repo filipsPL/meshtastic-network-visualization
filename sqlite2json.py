@@ -254,38 +254,38 @@ def export_traceroutes_to_json(db_path, json_output_path, time_limit_minutes):
             conn.close()
 
 
-def export_hourly_messages(db_path, days=1):
+def export_hourly_messages(db_path, distilled_db_path, days=1):
     """
     Export the number of messages received in each hour for the past N days to a JSON file,
-    broken down by message type.
+    broken down by message type. Uses pre-aggregated data from distilled database.
     
     Parameters:
-    db_path (str): Path to the SQLite database
+    db_path (str): Path to the main SQLite database (for traceroutes and neighbors)
+    distilled_db_path (str): Path to the distilled database with aggregated statistics
     days (int): Number of days to look back (default: 1)
     """
     try:
-        conn = sqlite3.connect(db_path)
+        conn = sqlite3.connect(distilled_db_path)
         cursor = conn.cursor()
         
-        # Calculate the cutoff timestamp
-        cutoff_time = int((datetime.now() - timedelta(days=days)).timestamp())
-        current_time = int(datetime.now().timestamp())
+        # Calculate the cutoff hour
+        cutoff_time = (datetime.now() - timedelta(days=days)).replace(minute=0, second=0, microsecond=0)
+        cutoff_hour = cutoff_time.strftime('%Y-%m-%d %H:00')
         
-        # Query to get message counts by hour and type
+        # Query to get message counts by hour and type from pre-aggregated data
         cursor.execute("""
             SELECT 
-                strftime('%Y-%m-%d %H:00:00', datetime(timestamp, 'unixepoch', 'localtime')) as hour,
-                type,
-                COUNT(*) as message_count
-            FROM messages 
-            WHERE timestamp >= ? AND timestamp <= ?
-            GROUP BY hour, type
+                hour,
+                message_type as type,
+                count as message_count
+            FROM hourly_message_counts 
+            WHERE hour >= ?
             ORDER BY hour, type
-        """, (cutoff_time,current_time))
+        """, (cutoff_hour,))
         
         rows = cursor.fetchall()
         
-        # Process data into format suitable for stacked bar chart
+        # Process data into format suitable for Plotly
         hours = []
         message_types = set()
         hour_type_counts = defaultdict(lambda: defaultdict(int))
@@ -344,34 +344,34 @@ def export_hourly_messages(db_path, days=1):
         if conn:
             conn.close()
 
-
-def export_hourly_unique_senders(db_path, days=1):
+def export_hourly_unique_senders(db_path, distilled_db_path, days=1):
     """
     Export the number of unique senders and physical senders in each hour for the past N days.
+    Uses pre-aggregated data from distilled database.
     
     Parameters:
-    db_path (str): Path to the SQLite database
+    db_path (str): Path to the main SQLite database (for traceroutes and neighbors)
+    distilled_db_path (str): Path to the distilled database with aggregated statistics
     days (int): Number of days to look back (default: 1)
     """
     try:
-        conn = sqlite3.connect(db_path)
+        conn = sqlite3.connect(distilled_db_path)
         cursor = conn.cursor()
         
-        # Calculate the cutoff timestamp
-        cutoff_time = int((datetime.now() - timedelta(days=days)).timestamp())
-        current_time = int(datetime.now().timestamp())
+        # Calculate the cutoff hour
+        cutoff_time = (datetime.now() - timedelta(days=days)).replace(minute=0, second=0, microsecond=0)
+        cutoff_hour = cutoff_time.strftime('%Y-%m-%d %H:00')
         
-        # Query to get unique sender counts by hour
+        # Query to get unique sender counts by hour from pre-aggregated data
         cursor.execute("""
             SELECT 
-                strftime('%Y-%m-%d %H:00:00', datetime(timestamp, 'unixepoch', 'localtime')) as hour,
-                COUNT(DISTINCT sender) as unique_senders,
-                COUNT(DISTINCT physical_sender) as unique_physical_senders
-            FROM messages 
-            WHERE timestamp >= ? AND timestamp <= ?
-            GROUP BY hour
+                hour,
+                unique_senders,
+                unique_physical_senders
+            FROM hourly_unique_senders 
+            WHERE hour >= ?
             ORDER BY hour
-        """, (cutoff_time, current_time))
+        """, (cutoff_hour,))
         
         rows = cursor.fetchall()
         
@@ -409,14 +409,15 @@ def export_hourly_unique_senders(db_path, days=1):
             plotly_data["metadata"]["average_unique_senders_per_hour"] = total_unique_senders / hour_count
             plotly_data["metadata"]["average_unique_physical_senders_per_hour"] = total_unique_physical_senders / hour_count
         
-        # Get total unique senders across all hours
+        # Get total unique senders for the entire period from daily aggregates
+        cutoff_date = cutoff_time.strftime('%Y-%m-%d')
         cursor.execute("""
             SELECT 
-                COUNT(DISTINCT sender) as total_unique_senders,
-                COUNT(DISTINCT physical_sender) as total_unique_physical_senders
-            FROM messages 
-            WHERE timestamp >= ? AND timestamp <= ?
-        """, (cutoff_time, current_time))
+                MAX(unique_senders) as total_unique_senders,
+                MAX(unique_physical_senders) as total_unique_physical_senders
+            FROM daily_unique_senders 
+            WHERE date >= ?
+        """, (cutoff_date,))
         
         total_row = cursor.fetchone()
         if total_row:
@@ -438,6 +439,36 @@ def export_hourly_unique_senders(db_path, days=1):
         if conn:
             conn.close()
 
+if __name__ == "__main__":
+    db_path = "mqtt_messages.db"
+    distilled_db_path = "mqtt_messages_distilled.db"
+    time_windows = [15, 30, 60, 3 * 60, 24 * 60]
+
+    for minutes in time_windows:
+        if minutes == 60:
+            time_str = "1h"
+        elif minutes == 3 * 60:
+            time_str = "3h"
+        elif minutes == 24 * 60:
+            time_str = "24h"
+        elif minutes == 30:
+            time_str = "30min"
+        elif minutes == 15:
+            time_str = "15min"
+
+        # Generate filenames with time window
+        messages_json = f"{data}/cytoscape_messages_{time_str}.json"
+        messages_physical_json = f"{data}/cytoscape_messages_physical_{time_str}.json"
+        neighbors_json = f"{data}/cytoscape_neighbors_{time_str}.json"
+        traceroutes_json = f"{data}/cytoscape_traceroutes_{time_str}.json"
+
+        print(f"\nExporting data for {time_str} time window...")
+
+        # Export topology data from main database
+        export_to_json(db_path, messages_json, minutes, use_physical_sender=False)
+        export_to_json(db_path, messages_physical_json, minutes, use_physical_sender=True)
+        export_neighbors_to_json(db_path, neighbors_json, minutes)
+        export_traceroutes_to_json(db_path, traceroutes_json, minutes)
 
 if __name__ == "__main__":
     db_path = "mqtt_messages.db"
@@ -470,6 +501,6 @@ if __name__ == "__main__":
         export_traceroutes_to_json(db_path, traceroutes_json, minutes) 
 
     print("\nGenerating message count plots...")
-    for days in [1, 7, 14]:
-        export_hourly_messages(db_path, days=days)
-        export_hourly_unique_senders(db_path, days=days)
+    for days in [1, 7, 14, 30]:
+        export_hourly_messages(db_path, distilled_db_path, days=days)
+        export_hourly_unique_senders(db_path, distilled_db_path, days=days)
