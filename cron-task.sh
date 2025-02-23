@@ -9,6 +9,9 @@ mkdir -p /var/www/meshtastic-network-visualization/data/
 # cd to dir when the scripts live
 cd /home/user/meshtastic-network-visualization/
 
+# distill data from big database
+python db_distill.py
+
 # dump the sqlite db to json
 python sqlite2json.py
 
