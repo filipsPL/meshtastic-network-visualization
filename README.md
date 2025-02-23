@@ -70,10 +70,15 @@ Set of tools for processing, storing, and visualizing data from Meshtastic mesh 
 
 - statistics for the messages collected in past 1 and 7 days.
 
-### 4. Auxiliary script to dump and copy data (`cron-task.sh`)
+### 4. Auxiliary script:
+
+#### 4a. to dump and copy data (`cron-task.sh`)
 - to be run from cron
+- updates hourly database (`mqtt_messages_distilled.db`)
 - dump json data, copy to web directory, generates timestamp
 
+#### 4a. to clean database (`db_clean_old_records.py`)
+- as the name suggests, removes old messages and traceroute info from the main database
 
 ## Installation
 
