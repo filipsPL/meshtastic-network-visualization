@@ -5,5 +5,8 @@
     "MQTT_USERNAME": "meshdev",
     "MQTT_PASSWORD": "large4cats",
     "USE_SSL": false,
-    "CLIENT_ID": "!aa3aded8"
+    "CLIENT_ID": "!aa3aded8",
+    "LongFast": "AQ==",
+    "MediumFast": "AQ==",
+    "ShortFast": "AQ=="
 }
